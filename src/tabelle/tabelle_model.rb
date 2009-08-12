@@ -1,0 +1,3 @@
+class TabelleModel
+
+end
