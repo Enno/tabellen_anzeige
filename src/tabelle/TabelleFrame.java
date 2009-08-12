@@ -34,6 +34,7 @@ public class TabelleFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         blatt = new javax.swing.JTable();
+        spaltenwahl_btn = new javax.swing.JButton();
         menuleiste = new javax.swing.JMenuBar();
         datei_menu = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -55,6 +56,8 @@ public class TabelleFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(blatt);
 
+        spaltenwahl_btn.setText("Spaltenwahl");
+
         datei_menu.setText("Datei");
         menuleiste.add(datei_menu);
 
@@ -68,14 +71,20 @@ public class TabelleFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(spaltenwahl_btn)))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addComponent(spaltenwahl_btn)
+                .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -101,6 +110,7 @@ public class TabelleFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuBar menuleiste;
+    private javax.swing.JButton spaltenwahl_btn;
     // End of variables declaration//GEN-END:variables
 
 }

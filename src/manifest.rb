@@ -1,4 +1,4 @@
-$LOAD_PATH.clear #ensure load path is cleared so system gems and libraries are not used (only project gems/libs)
+#$LOAD_PATH.clear #ensure load path is cleared so system gems and libraries are not used (only project gems/libs)
 # Load current and subdirectories in src onto the load path
 $LOAD_PATH << File.dirname(__FILE__)
 Dir.glob(File.expand_path(File.dirname(__FILE__) + "/**/*").gsub('%20', ' ')).each do |directory|
@@ -24,7 +24,9 @@ require 'resolver'
 
 case Monkeybars::Resolver.run_location
 when Monkeybars::Resolver::IN_FILE_SYSTEM
-  add_to_classpath '../lib/java/monkeybars-1.0.2.jar'
+  add_to_classpath '../lib/java/monkeybars-1.0.4.jar'
+#  add_to_classpath '../src'
+  add_to_classpath '/dat/GiS/gm/rou/rowcalc/haupt/src/tabelle/'
 end
 
 require 'monkeybars'

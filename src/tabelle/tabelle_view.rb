@@ -1,7 +1,9 @@
 require 'daten_modell'
 
 class TabelleView < ApplicationView
+  #set_java_class 'TabelleFrame'
   set_java_class 'tabelle.TabelleFrame'
+  #set_java_class 'tabelle.TabelleFrame'
 
   def load
 
