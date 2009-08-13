@@ -1,5 +1,6 @@
+
+*.log
 *~
 nbproject*
-build*
-package*
-lib/java*
+.~*
+

@@ -29,6 +29,7 @@ class DatenModell <  javax.swing.table.AbstractTableModel
 
   def isCellEditable(i, j)
     #true
+    false
   end
 
 end
