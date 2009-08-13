@@ -25,8 +25,8 @@ require 'resolver'
 case Monkeybars::Resolver.run_location
 when Monkeybars::Resolver::IN_FILE_SYSTEM
   add_to_classpath '../lib/java/monkeybars-1.0.4.jar'
-#  add_to_classpath '../src'
-  add_to_classpath '/dat/GiS/gm/rou/rowcalc/haupt/src/tabelle/'
+  add_to_classpath '../src'
+  add_to_classpath '../src/tabelle'
 end
 
 require 'monkeybars'

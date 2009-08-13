@@ -16,7 +16,11 @@ end
 
 class Object
   def add_to_classpath(path)
-    $CLASSPATH << get_expanded_path(path)
+    e = $CLASSPATH << get_expanded_path(path)
+    p [:path=>path, :cp=>$CLASSPATH]
+    p e
+    p ($CLASSPATH.methods - Object.instance_methods - Enumerable.instance_methods).sort
+    e
   end
   
   def add_to_load_path(path)
@@ -25,7 +29,10 @@ class Object
   
   private
   def get_expanded_path(path)
-    resolved_path = File.expand_path(File.dirname(__FILE__) + "/" + path.gsub("\\", "/"))
+    #2009-08-13, Sven:
+    resolved_path = File.expand_path(path.gsub("\\", "/"), File.dirname(__FILE__) )
+    #orig:
+    #resolved_path = File.expand_path(File.dirname(__FILE__) + "/" + path.gsub("\\", "/"))
     resolved_path.gsub!("file:", "") unless resolved_path.index(".jar!")
     resolved_path.gsub!("%20", ' ')
     resolved_path
