@@ -14,7 +14,12 @@ class SpaltenwahlView < ApplicationView
     DummyViewComponent.new
   end
 
-# http://groups.google.com/group/monkeybars/browse_thread/thread/6f0c5e59110b696b
+# Hab es jetzt mit Dialogs und nested components versucht:
+# http://kenai.com/projects/monkeybars/pages/Dialogs/text
+# http://groups.google.com/group/monkeybars/browse_thread/thread/6f0c5e59110b696b (Variante c)
+# Funktioniert, bis auf das Abfangen der Ereignisse zum schließen.
+# Da das aber wichtig ist, bin ich etwas ratlos.
+#
   # statt dessen:
   def parent_component=(parent)
     p :parent_component=
