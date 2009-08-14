@@ -4,8 +4,8 @@ require 'daten_modell'
 #include_class 'tabelle.TabelleFrame'
 
 class TabelleView < ApplicationView
-  set_java_class 'TabelleFrame'
-  #set_java_class 'tabelle.TabelleFrame'
+  #set_java_class 'TabelleFrame'
+  set_java_class 'tabelle.TabelleFrame'
 
   nest :sub_view => :spaltenwahl_dialog, :using => [:define_popup_parent, nil]
   def define_popup_parent(view, component, model, transfer)

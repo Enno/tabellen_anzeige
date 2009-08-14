@@ -27,11 +27,12 @@ end
 
 describe TabelleController do
   before(:each) do
-    @tabelle_controller = TabelleController.instance
+    @tc = TabelleController.instance
   end
 
   it "should desc" do
-    # TODO
+    @tc.open
+    
   end
 end
 
