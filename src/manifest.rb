@@ -1,4 +1,4 @@
-#$LOAD_PATH.clear #ensure load path is cleared so system gems and libraries are not used (only project gems/libs)
+$LOAD_PATH.clear #ensure load path is cleared so system gems and libraries are not used (only project gems/libs)
 # Load current and subdirectories in src onto the load path
 $LOAD_PATH << File.dirname(__FILE__)
 Dir.glob(File.expand_path(File.dirname(__FILE__) + "/**/*").gsub('%20', ' ')).each do |directory|

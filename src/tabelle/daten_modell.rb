@@ -1,30 +1,36 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+# -*- coding: utf-8 -*-"
+
+# encoding: utf-8
+$KCODE = "UTF8"
 
 class DatenModell <  javax.swing.table.AbstractTableModel
-  def initialize
-    super
-    @daten = Array.new(7) {|i| Array.new(4,nil)}
+
+  def initialize(rechen_zeilen)
+    super()
+    #super
+    @rechen_zeilen = rechen_zeilen
+    @tabellen_klasse = @rechen_zeilen.first.class
+    @spalten_keys = @tabellen_klasse.send("_ausgabe_größen")
   end
 
   def getRowCount
-    7
+    @rechen_zeilen.size
   end
 
   def getColumnCount
-    4
+    @spalten_keys.size
   end
 
   def getColumnName(j)
-    (j*j).to_s
+    @spalten_keys[j].to_s
   end
 
   def getValueAt(i, j)
-    @daten[i][j]
+    zeile = @rechen_zeilen[i]
+    zeile.send(@spalten_keys[i]).to_s
   end
 
   def setValueAt(obj, i, j)
-    @daten[i][j] = obj
   end
 
   def isCellEditable(i, j)

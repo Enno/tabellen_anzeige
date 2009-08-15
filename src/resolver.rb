@@ -16,11 +16,7 @@ end
 
 class Object
   def add_to_classpath(path)
-    e = $CLASSPATH << get_expanded_path(path)
-    p [:path=>path, :cp=>$CLASSPATH]
-    p e
-    p ($CLASSPATH.methods - Object.instance_methods - Enumerable.instance_methods).sort
-    e
+    $CLASSPATH << get_expanded_path(path)
   end
   
   def add_to_load_path(path)
