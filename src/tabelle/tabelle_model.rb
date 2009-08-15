@@ -1,3 +1,5 @@
+require 'daten_modell'
+
 class TabelleModel
    attr_reader :daten_pfad, :daten_modell
    

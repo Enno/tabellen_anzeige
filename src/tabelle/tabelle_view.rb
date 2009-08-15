@@ -1,4 +1,3 @@
-require 'daten_modell'
 
 #vielleicht hilft das, damit die pure-Ruby-Spec-AUsführung die Java-Klasse findet?
 #include_class 'tabelle.TabelleFrame'

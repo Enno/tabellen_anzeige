@@ -45,9 +45,66 @@ def show_error_dialog_and_exit(exception, thread=nil)
 end
 GlobalErrorHandler.on_error {|exception, thread| show_error_dialog_and_exit(exception, thread) }
 
+unless true # defined? Mutex
+  # taken from /usr/local/jruby/lib/ruby/1.8/debug.rb
+  class Mutex
+    def initialize
+      @locker = nil
+      @waiting = []
+      @locked = false;
+    end
+
+    def locked?
+      @locked
+    end
+
+    def lock
+      return if Thread.critical
+      return if @locker == Thread.current
+      while (Thread.critical = true; @locked)
+        @waiting.push Thread.current
+        Thread.stop
+      end
+      @locked = true
+      @locker = Thread.current
+      Thread.critical = false
+      self
+    end
+
+    def unlock
+      return if Thread.critical
+      return unless @locked
+      unless @locker == Thread.current
+        raise RuntimeError, "unlocked by other"
+      end
+      Thread.critical = true
+      t = @waiting.shift
+      @locked = false
+      @locker = nil
+      Thread.critical = false
+      t.run if t
+      self
+    end
+  end
+  # taken from /usr/local/jruby/lib/ruby/site_ruby/1.8/builtin/prelude.rb
+  class Mutex
+    def synchronize
+      self.lock
+      begin
+        yield
+      ensure
+        self.unlock rescue nil
+      end
+    end
+  end
+
+end
+
+
 begin
   # Your application code goes here
   require 'tabelle_controller'
+  #TabelleController.create_instance.open
   TabelleController.instance.open
 rescue => e
   show_error_dialog_and_exit(e)
