@@ -7,10 +7,12 @@ require 'manifest'
 p $CLASSPATH
 
 #include_class 'TabelleFrame'
-p $CLASSPATH
+p $LOAD_PATH
 
 require 'tabelle/tabelle_controller'
-require 'spec/mocks/framework'
+#require 'rubygems'
+#require 'spec'
+#require 'spec/mocks/framework'
 
 class DummyViewComponent
   def method_missing(*args, &blk)

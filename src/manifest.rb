@@ -2,6 +2,7 @@ $LOAD_PATH.clear #ensure load path is cleared so system gems and libraries are n
 # Load current and subdirectories in src onto the load path
 $LOAD_PATH << File.dirname(__FILE__)
 Dir.glob(File.expand_path(File.dirname(__FILE__) + "/**/*").gsub('%20', ' ')).each do |directory|
+  next if directory =~ /\/rspec\//
   next if directory =~ /\/facets\//
   # File.directory? is broken in current JRuby for dirs inside jars
   # http://jira.codehaus.org/browse/JRUBY-2289
@@ -53,11 +54,16 @@ require 'application_view'
 #
 # add_to_load_path "../lib/java"
 #
-
+gem_names = ["rspec", "facets"]
 case Monkeybars::Resolver.run_location
 when Monkeybars::Resolver::IN_FILE_SYSTEM
+  gem_names.each do |gem_name|
+    add_to_load_path "../lib/ruby/#{gem_name}/lib"
+  end
   # Files to be added only when running from the file system go here
 when Monkeybars::Resolver::IN_JAR_FILE
-  add_to_load_path "facets/lib"
+  gem_names.each do |gem_name|
+    add_to_load_path "#{gem_name}/lib"
+  end
   # Files to be added only when run from inside a jar file
 end
