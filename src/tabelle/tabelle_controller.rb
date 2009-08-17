@@ -21,8 +21,10 @@ class TabelleController < ApplicationController
   end
 
   def anzeigen_btn_action_performed
-    update_model(view_model, :pfad)
+    update_model   view_model, :daten_pfad
+    p model.daten_pfad
     #model.daten_pfad =
-    signal(:neuer_daten_pfad)
+    signal :neuer_daten_pfad
+    update_view
   end
 end

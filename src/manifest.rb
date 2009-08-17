@@ -1,9 +1,12 @@
 $LOAD_PATH.clear #ensure load path is cleared so system gems and libraries are not used (only project gems/libs)
 # Load current and subdirectories in src onto the load path
 $LOAD_PATH << File.dirname(__FILE__)
+
+gem_names = ["rspec", "facets", "dbf-1.0.5"]
+
 Dir.glob(File.expand_path(File.dirname(__FILE__) + "/**/*").gsub('%20', ' ')).each do |directory|
-  next if directory =~ /\/rspec\//
-  next if directory =~ /\/facets\//
+  next if gem_names.any? {|gem_name| directory =~ /\/#{gem_name}\// }
+  #next if directory =~ /\/facets\//
   # File.directory? is broken in current JRuby for dirs inside jars
   # http://jira.codehaus.org/browse/JRUBY-2289
   $LOAD_PATH << directory unless directory =~ /\.\w+$/
@@ -32,6 +35,10 @@ when Monkeybars::Resolver::IN_FILE_SYSTEM
   #add_to_classpath '../src/tabelle'
 end
 
+def gem(*args)
+  # dummy
+end
+
 require 'monkeybars'
 require 'application_controller'
 require 'application_view'
@@ -54,16 +61,46 @@ require 'application_view'
 #
 # add_to_load_path "../lib/java"
 #
-gem_names = ["rspec", "facets"]
+def robust_expand_path(path, base_path)
+  File.expand_path(path.gsub("file:", ""), base_path) #.gsub("file:", "")
+end
+def add_gem_path(gem_path)
+  loadpath_meta_path = File.join( robust_expand_path(gem_path, File.dirname(__FILE__)), "meta", "loadpath")
+  p loadpath_meta_path
+  relative_lib_paths = if File.exist? loadpath_meta_path then
+    File.read(loadpath_meta_path).split("\n")
+  else
+    ["lib"]
+  end
+  relative_lib_paths.each do |rel_lib_path|
+    add_to_load_path robust_expand_path rel_lib_path, gem_path
+  end
+end
+
+gem_names.each do |gem_name|
+  case Monkeybars::Resolver.run_location
+  when Monkeybars::Resolver::IN_FILE_SYSTEM
+    # Files to be added only when running from the file system go here
+    add_gem_path "../lib/ruby/#{gem_name}"
+  when Monkeybars::Resolver::IN_JAR_FILE
+    # Files to be added only when run from inside a jar file
+    add_gem_path "#{gem_name}"
+  end
+end
+
+rcomp_dirs = %w[ffmath]
+rcomp_dirs.each do |name|
+  add_to_load_path case Monkeybars::Resolver.run_location
+  when Monkeybars::Resolver::IN_FILE_SYSTEM
+    "../lib/rcomp/#{name}/lib"
+  when Monkeybars::Resolver::IN_JAR_FILE
+    "#{name}/lib"
+  end
+end
+
 case Monkeybars::Resolver.run_location
 when Monkeybars::Resolver::IN_FILE_SYSTEM
-  gem_names.each do |gem_name|
-    add_to_load_path "../lib/ruby/#{gem_name}/lib"
-  end
   # Files to be added only when running from the file system go here
 when Monkeybars::Resolver::IN_JAR_FILE
-  gem_names.each do |gem_name|
-    add_to_load_path "#{gem_name}/lib"
-  end
   # Files to be added only when run from inside a jar file
 end

@@ -45,6 +45,8 @@ def show_error_dialog_and_exit(exception, thread=nil)
 end
 GlobalErrorHandler.on_error {|exception, thread| show_error_dialog_and_exit(exception, thread) }
 
+$KCODE = "UTF8"
+
 begin
   # Your application code goes here
   require 'tabelle_controller'

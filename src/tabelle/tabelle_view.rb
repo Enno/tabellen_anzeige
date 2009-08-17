@@ -12,7 +12,7 @@ class TabelleView < ApplicationView
      view.parent_component = @main_view_component
   end
 
-   def load
+  def load
 
 
     cmodel = blatt.getColumnModel
@@ -24,14 +24,14 @@ class TabelleView < ApplicationView
     #blatt.setColumnModel cmodel
 
     #self.blatt.setModel DatenModell.new
-
-
   end
+
+  map :model => :daten_pfad, :view => "daten_pfad.text"
 
   define_signal :name => :neuer_daten_pfad, :handler => :neuer_daten_pfad
 
   def neuer_daten_pfad(model, transfer)
-    blatt.setModel model.daten_modell
+    blatt.model = model.daten_modell
   end
 
 end

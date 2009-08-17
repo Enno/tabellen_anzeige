@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-"
 
 # encoding: utf-8
-$KCODE = "UTF8"
+
+require 'ffmath'
+
 
 class DatenModell <  javax.swing.table.AbstractTableModel
 
@@ -11,6 +13,7 @@ class DatenModell <  javax.swing.table.AbstractTableModel
     @rechen_zeilen = rechen_zeilen
     @tabellen_klasse = @rechen_zeilen.first.class
     @spalten_keys = @tabellen_klasse.send("_ausgabe_größen")
+    p [:@spalten_keys, @spalten_keys]
   end
 
   def getRowCount
@@ -27,7 +30,7 @@ class DatenModell <  javax.swing.table.AbstractTableModel
 
   def getValueAt(i, j)
     zeile = @rechen_zeilen[i]
-    zeile.send(@spalten_keys[i]).to_s
+    zeile.send(@spalten_keys[j]).to_s
   end
 
   def setValueAt(obj, i, j)
