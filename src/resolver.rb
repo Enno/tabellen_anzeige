@@ -23,10 +23,17 @@ class Object
     $LOAD_PATH << get_expanded_path(path)
   end
   
+  def robust_expand_path(path, base_path)
+    pure_base_path = base_path
+    prefix = pure_base_path.slice!(/^file\:/)
+    prefix.to_s + File.expand_path(path.gsub("file:", ""), base_path)
+  end
+
+
   private
   def get_expanded_path(path)
     #2009-08-13, Sven:
-    resolved_path = File.expand_path(path.gsub("\\", "/"), File.dirname(__FILE__) )
+    resolved_path = robust_expand_path(path.gsub("\\", "/"), File.dirname(__FILE__) )
     #orig:
     #resolved_path = File.expand_path(File.dirname(__FILE__) + "/" + path.gsub("\\", "/"))
     resolved_path.gsub!("file:", "") unless resolved_path.index(".jar!")

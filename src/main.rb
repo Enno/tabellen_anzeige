@@ -15,6 +15,15 @@ when /^win|mswin/i # Windows specific code
 when /linux/i # Linux specific code
 end
 
+$prot_datei = File.open "rc_protokoll.txt", "a"
+$old_stdout = $prot_datei
+$stdout = $stderr = $prot_datei
+begin
+  puts "------------------------------------------------"  
+  puts
+  puts Time.now
+  puts
+
 # End of platform specific code
 #===============================================================================
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
@@ -54,4 +63,9 @@ begin
   TabelleController.instance.open
 rescue => e
   show_error_dialog_and_exit(e)
+end
+
+
+ensure
+$stdout = $stderr = $old_stdout
 end

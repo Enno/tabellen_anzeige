@@ -61,19 +61,28 @@ require 'application_view'
 #
 # add_to_load_path "../lib/java"
 #
+
 def robust_expand_path(path, base_path)
-  File.expand_path(path.gsub("file:", ""), base_path) #.gsub("file:", "")
+  pure_base_path = base_path
+  prefix = pure_base_path.slice!(/^file\:/)
+  prefix.to_s + File.expand_path(path.gsub("file:", ""), base_path)
 end
+
 def add_gem_path(gem_path)
   loadpath_meta_path = File.join( robust_expand_path(gem_path, File.dirname(__FILE__)), "meta", "loadpath")
-  p loadpath_meta_path
+  p [File.exist?(loadpath_meta_path), loadpath_meta_path]
   relative_lib_paths = if File.exist? loadpath_meta_path then
     File.read(loadpath_meta_path).split("\n")
   else
     ["lib"]
   end
+  # relative_lib_paths = %w[lib/core lib/lore lib/more] if gem_path =~ /facets/ then # TODO Quick hack (wie funktioniert File.exist? für jars?)
   relative_lib_paths.each do |rel_lib_path|
-    add_to_load_path robust_expand_path rel_lib_path, gem_path
+    #add_to_load_path robust_expand_path rel_lib_path, gem_path
+    full_gem_path = robust_expand_path(gem_path, File.dirname(__FILE__))
+    target_path = robust_expand_path(rel_lib_path, full_gem_path)
+    p target_path
+    add_to_load_path target_path.sub("file:","")
   end
 end
 
