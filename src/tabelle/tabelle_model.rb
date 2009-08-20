@@ -1,14 +1,16 @@
 
-p $:
-require 'ffmath'
+#p $:
+#require 'ffmath'
 require 'daten_modell'
 
 class TabelleModel
-   attr_reader :daten_pfad, :daten_modell
-   
+   attr_reader :daten_pfad
+   attr_accessor :daten_modell
   def initialize
     super
-    @daten_modell = nil
+    #@daten_modell = nil
+    @daten_modell_dummy = @daten_modell = DatenModellDummy.new
+    @spaltenname = []
   end
 
   def daten_pfad=(daten_pfad)
@@ -25,4 +27,11 @@ class TabelleModel
       puts $!.backtrace
     end
   end
+
+  def alle_spalten_namen
+    daten_modell.getColumnCount.times do |x|
+    @spaltenname[x] = daten_modell.getColumnName(x)
+    end
+  end
+#TODO: fehlermeldung beheben
 end

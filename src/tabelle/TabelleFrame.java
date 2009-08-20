@@ -37,8 +37,10 @@ public class TabelleFrame extends javax.swing.JFrame {
         spaltenwahl_btn = new javax.swing.JButton();
         daten_pfad = new javax.swing.JTextField();
         anzeigen_btn = new javax.swing.JButton();
+        exportieren_button = new javax.swing.JButton();
         menuleiste = new javax.swing.JMenuBar();
         datei_menu = new javax.swing.JMenu();
+        exportieren_nach_menuitem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         jLabel1.setText("jLabel1");
@@ -64,7 +66,13 @@ public class TabelleFrame extends javax.swing.JFrame {
 
         anzeigen_btn.setText("Anzeigen");
 
+        exportieren_button.setLabel("Exportieren");
+
         datei_menu.setText("Datei");
+
+        exportieren_nach_menuitem.setLabel("Exportieren nach...");
+        datei_menu.add(exportieren_nach_menuitem);
+
         menuleiste.add(datei_menu);
 
         jMenu2.setText("Edit");
@@ -79,12 +87,17 @@ public class TabelleFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
-                    .addComponent(spaltenwahl_btn)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(daten_pfad, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(daten_pfad, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spaltenwahl_btn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(anzeigen_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(anzeigen_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(exportieren_button)
+                                .addGap(30, 30, 30)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -95,7 +108,9 @@ public class TabelleFrame extends javax.swing.JFrame {
                     .addComponent(daten_pfad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(anzeigen_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spaltenwahl_btn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spaltenwahl_btn)
+                    .addComponent(exportieren_button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                 .addContainerGap())
@@ -120,6 +135,8 @@ public class TabelleFrame extends javax.swing.JFrame {
     private javax.swing.JTable blatt;
     private javax.swing.JMenu datei_menu;
     private javax.swing.JTextField daten_pfad;
+    private javax.swing.JButton exportieren_button;
+    private javax.swing.JMenuItem exportieren_nach_menuitem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;
