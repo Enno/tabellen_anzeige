@@ -10,7 +10,7 @@ describe ExportIntoExcel do
   daten_modell_dummy = DatenModellDummy.new
   File.delete(filepath) rescue nil
   @export_into_excel = ExportIntoExcel.new(filepath)
-  @export_into_excel.exportieren(daten_modell_dummy)
+  @export_into_excel.get_data(daten_modell_dummy)
   before(:each) do
     
   end
@@ -20,28 +20,25 @@ describe ExportIntoExcel do
   end
 
   it "sollte integer auslesen" do
-    z = 1
-    s = 1
+    z, s = 1, 1
     book = Spreadsheet.open filepath
     book.worksheet(0).row(z+1)[s].should == daten_modell_dummy.getValueAt(z,s).to_i
   end
 
   it "sollte float auslesen" do
-    z = 2
-    s = 1
+    z, s  = 3, 3
     book = Spreadsheet.open filepath
     book.worksheet(0).row(z+1)[s].should == daten_modell_dummy.getValueAt(z,s).to_f
   end
 
   it "sollte strings auslesen" do
-    z, s = 2, 3 #TODO: beim refactoring drauf achten
+    z, s = 2, 3 
     book = Spreadsheet.open filepath
     book.worksheet(0).row(z+1)[s].should == daten_modell_dummy.getValueAt(z,s).to_s
   end
 
   it "sollte nil auslesen" do
-    z = 4
-    s = 4
+    z, s = 4, 4
     book = Spreadsheet.open filepath
     book.worksheet(0).row(z+1)[s].should == daten_modell_dummy.getValueAt(z,s)
   end

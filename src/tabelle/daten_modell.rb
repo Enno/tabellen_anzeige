@@ -73,5 +73,4 @@ class DatenModellDummy <  javax.swing.table.AbstractTableModel
   def isCellEditable(i, j)
     true
   end
-
 end

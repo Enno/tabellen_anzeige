@@ -1,8 +1,8 @@
 class DateiauswahlModel
-   attr_accessor :zielpfad
+   attr_accessor :destination_path
   def initialize
     super
-
+  
   end
 
 end

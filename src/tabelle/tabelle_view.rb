@@ -35,6 +35,29 @@ class TabelleView < ApplicationView
   end
 
   map :model => :daten_modell, :view => "blatt.model"#, :using => [nil, :default]
+  map :model => :alle_spalten, :view => "blatt", :using => [nil, :java_array_to_ruby]
+  map :model => :aktive_spalten_indices, :view => "blatt", :using => [nil, :java_array_to_ruby]
 
+  def java_array_to_ruby(java_array_of_indices)
+    java_array_of_indices.to_a
+  end
 
+  def ruby_array_of_indices_to_java(array_of_indices)
+    array_of_indices.to_java(Java::int)
+  end
+
+  define_signal :name => :aktive_spalten_signal, :handler => :setze_aktive_spalten
+
+  def setze_aktive_spalten(model, transfer)
+    blatt.setColumnSelectionAllowed(true)
+    blatt.setRowSelectionAllowed(false)
+    blatt.clearSelection()
+    aktive_spalten_index = []
+    model.aktive_spalten.each do |name|
+      aktive_spalten_index << blatt.columnModel.getColumnIndex(name)
+    end
+    aktive_spalten_index.each do |x|
+      blatt.addColumnSelectionInterval(x, x)
+    end
+  end
 end

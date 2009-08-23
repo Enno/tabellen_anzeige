@@ -1,3 +1,5 @@
+#import java.io.File
+
 class DateiauswahlView < ApplicationView
   set_java_class 'dateiauswahl.DateiauswahlDialog'
 
@@ -6,11 +8,12 @@ class DateiauswahlView < ApplicationView
   end
 
   def load
-
+    default_directory = File.dirname(File.dirname(__FILE__))
+   dateiauswahl_filechooser.currentDirectory = java.io.File.new(default_directory)
   end
 
-  map :view => "dateiauswahl_filechooser.selectedFile", :model => :zielpfad, :using => [nil, :string_zu_ruby]
-
+  map :view => "dateiauswahl_filechooser.selectedFile", :model => :destination_path, :using => [nil, :string_zu_ruby]
+  
   def string_zu_ruby(jstring)
     jstring.to_s
   end

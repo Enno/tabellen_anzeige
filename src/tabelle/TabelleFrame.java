@@ -58,7 +58,9 @@ public class TabelleFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        blatt.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(blatt);
+        blatt.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         spaltenwahl_btn.setText("Spaltenwahl");
 

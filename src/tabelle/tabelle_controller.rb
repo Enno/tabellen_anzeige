@@ -12,7 +12,7 @@ class TabelleController < ApplicationController
   def spaltenwahl_btn_action_performed
     spaltenwahl_controller = SpaltenwahlController.instance
     spaltenwahl_controller.spalten_eintragen :alle => model.alle_spalten_namen,
-      :aktive => %w[sp2 letzte]
+      :aktive => model.alle_spalten_namen #model.aktive_spalten_namen(model.selected_columns) #%w[sp2 letzte]
     #TODO: auch die aktiven, aber als speicher model.aktive_spalten_namen
     # bei init auf alle setzen
     p :vor_dialog_open
@@ -20,37 +20,43 @@ class TabelleController < ApplicationController
     p :dialog_closed
     spalten = spaltenwahl_controller.aktive_spalten
     p [:vom_dialog_erhalten=, spalten]
+
+    aktive_spalten_auswahl(spalten)
+
     #spaltenwahl_controller.dispose
     #TODO: nur ausgewaehlte spalten anzeigen (Jtable optionen durchsuchen) mithilfe breite auf 0
+  end
+
+  def aktive_spalten_auswahl(spalten)
+    update_model view_model, :aktive_spalten
+    model.aktive_spalten = spalten
+    signal :aktive_spalten_signal
+    update_view
   end
 
   def exportieren_button_action_performed
     eg = ExportIntoExcel.new(FILE_PATH)
     update_model view_model, :daten_modell
-    eg.exportieren(model.daten_modell)
-    #signal :daten_modell_select_all
+    eg.get_data(daten_modell)
     update_view
   end
 
   def anzeigen_btn_action_performed
     update_model   view_model, :daten_pfad
-    p model.daten_pfad
-    #model.daten_pfad =
+    #p model.daten_pfad
     signal :neuer_daten_pfad
     update_view
   end
 
   def exportieren_nach_menuitem_action_performed
     dateiauswahl_controller = DateiauswahlController.instance
-    #TODO: hier currentdir vorbelegen (siehe spaltenwahl)
     dateiauswahl_controller.open
-    zielpfad = dateiauswahl_controller.uebergebe_zielpfad
-    eg = ExportIntoExcel.new(zielpfad)
-    eg.exportieren(daten_modell)
+    destination_path = dateiauswahl_controller.get_destination_path
+    eg = ExportIntoExcel.new(destination_path)
+    eg.get_data(daten_modell)
   end
 
   def daten_modell
     model.daten_modell
   end
 end
-
