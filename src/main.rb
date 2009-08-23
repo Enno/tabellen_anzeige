@@ -16,7 +16,7 @@ when /linux/i # Linux specific code
 end
 
 $prot_datei = File.open "rc_protokoll.txt", "a"
-$old_stdout = $prot_datei
+$old_stdout = $stdout
 $stdout = $stderr = $prot_datei
 begin
   puts "------------------------------------------------"  

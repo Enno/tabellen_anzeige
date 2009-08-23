@@ -12,7 +12,7 @@ class DatenModell <  javax.swing.table.AbstractTableModel
     #super
     @rechen_zeilen = rechen_zeilen
     @tabellen_klasse = @rechen_zeilen.first.class
-    @spalten_keys = @tabellen_klasse.send("_ausgabe_größen")
+    @spalten_keys = @tabellen_klasse.send("_ausgabe_groeszen")
     p [:@spalten_keys, @spalten_keys]
   end
 

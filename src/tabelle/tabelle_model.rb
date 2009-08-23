@@ -14,8 +14,8 @@ class TabelleModel
   def daten_pfad=(daten_pfad)
     p [:dpfad=, daten_pfad]
     begin
-      @daten_pfad = daten_pfad
-      tabellen_zeilen = TABELLEN_FUNDAMENT.tabelle_fuer_pfad(daten_pfad)
+      @daten_pfad = daten_pfad.gsub("\\","/")
+      tabellen_zeilen = TABELLEN_FUNDAMENT.tabelle_fuer_pfad(daten_pfad + ":vk")
       @daten_modell = DatenModell.new(tabellen_zeilen)
       #p @daten_modell
       p daten_modell.getColumnCount
