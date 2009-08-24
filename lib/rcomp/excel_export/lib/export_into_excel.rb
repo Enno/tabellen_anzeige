@@ -7,7 +7,7 @@ class ExportIntoExcel
     @worksheet = 'data'
   end
 
-  def get_data(data_model)
+  def get_all_data(data_model)
     @rowcount_value = data_model.getRowCount
     @colcount_value = data_model.getColumnCount
     @value = Array.new(@rowcount_value) {|i| Array.new(@colcount_value, nil)}
@@ -25,6 +25,9 @@ class ExportIntoExcel
     write_into_excel_file
   end
 
+  def get_selected_data(data_model)
+    puts "nur selektierte exportieren"
+  end
   def check_value_format(data_model, row, col)
     @value[row][col] = if data_model.getValueAt(row, col) =~ /[a-zA-Z]{0}[0-9]+/ #TODO: einzelene ziffern funktionieren nicht...
       if data_model.getValueAt(row, col).match(/[.,]/)
@@ -58,4 +61,3 @@ end
 
 #TODO: formatieren (grau fuer spaltenueberschriften) und nur fuer belegte zellen
 #TODO: Formeln und Kommentare mit spreadsheet moeglich?
-#TODO: dialog zur auswahlbestaetigung

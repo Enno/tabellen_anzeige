@@ -14,9 +14,7 @@ class TabelleController < ApplicationController
   def spaltenwahl_btn_action_performed
     spaltenwahl_controller = SpaltenwahlController.instance
     spaltenwahl_controller.spalten_eintragen :alle => model.alle_spalten_namen,
-      :aktive => model.alle_spalten_namen #model.aktive_spalten_namen(model.selected_columns) #%w[sp2 letzte]
-    #TODO: auch die aktiven, aber als speicher model.aktive_spalten_namen
-    # bei init auf alle setzen
+      :aktive => model.alle_spalten_namen #bei init alle gesetzt
     p :vor_dialog_open
     spaltenwahl_controller.open
     p :dialog_closed
@@ -26,7 +24,6 @@ class TabelleController < ApplicationController
     aktive_spalten_auswahl(aktive_spalten, inaktive_spalten)
 
     #spaltenwahl_controller.dispose
-    #TODO: nur ausgewaehlte spalten anzeigen (Jtable optionen durchsuchen) mithilfe breite auf 0
   end
 
   def aktive_spalten_auswahl(aktive_spalten, inaktive_spalten)
@@ -51,8 +48,10 @@ class TabelleController < ApplicationController
   end
 
   def beenden_menuitem_action_performed
-    label = "Programm beenden?"
-    close if open_bestaetigung_dialog(label)
+    label        = "Programm beenden?"
+    button1_text = "Confirm"
+    button2_text = "Cancel"
+    close if open_bestaetigung_dialog(label, button1_text, button2_text)
   end
   
   def anzeigen_btn_action_performed
@@ -63,13 +62,24 @@ class TabelleController < ApplicationController
   end
 
   def exportieren_nach_menuitem_action_performed
+    label        = "Welche Spalten sollen exportiert werden?"
+    button1_text = "Alle"
+    button2_text = "Ausgewählte"
+
     dateiauswahl_controller = DateiauswahlController.instance
     dateiauswahl_controller.open
     destination_path = dateiauswahl_controller.get_destination_path
     eg = ExportIntoExcel.new(destination_path)
-    eg.get_data(daten_modell)
-    label = "Exportieren erfolgreich (#{destination_path})"
-    open_info_dialog(label)
+    case open_bestaetigung_dialog(label, button1_text, button2_text)
+    when true
+      eg.get_all_data(daten_modell)
+      label = "Exportieren erfolgreich (#{destination_path})"
+      open_info_dialog(label)
+    when false
+      eg.get_selected_data(daten_modell)
+      label = "in progress"
+      open_info_dialog(label)
+    end
     update_view
   end
 
@@ -79,12 +89,12 @@ class TabelleController < ApplicationController
     info_dialog.open
   end
 
-  def open_bestaetigung_dialog(label)
+  def open_bestaetigung_dialog(label, button1_text, button2_text)
     bestaetigung_dialog = BestaetigungController.instance
-    bestaetigung_dialog.set_label(label)
+    bestaetigung_dialog.set_label(label, button1_text, button2_text)
     bestaetigung_dialog.open
     dialog_result = bestaetigung_dialog.dialog_result
-    return dialog_result
+    return dialog_result #true = button1, false = button2
   end
 
   def daten_modell
