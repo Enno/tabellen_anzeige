@@ -5,7 +5,7 @@ require 'daten_modell'
 
 class TabelleModel
   attr_reader :daten_pfad
-  attr_accessor :daten_modell, :aktive_spalten, :alle_spalten, :aktive_spalten_indices
+  attr_accessor :daten_modell, :aktive_spalten, :inaktive_spalten, :alle_spalten
   def initialize
     super
     #@daten_modell = nil
@@ -31,7 +31,7 @@ class TabelleModel
 
   def alle_spalten_namen
     0.upto(daten_modell.getColumnCount-1) do |x|
-      @spaltenname[x] = daten_modell.getColumnName(x)
+      @spaltenname[x] = daten_modell.getColumnName(x).to_s
     end
     return @spaltenname
   end

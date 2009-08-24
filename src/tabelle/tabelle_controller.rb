@@ -1,6 +1,8 @@
 require 'spaltenwahl_controller'
 require "#{File.dirname(File.dirname(File.dirname(__FILE__)))}/lib/rcomp/excel_export/lib/export_into_excel"
 require 'dateiauswahl_controller'
+require 'info_controller'
+require 'bestaetigung_controller'
 
 FILE_PATH = Dir.getwd + '/data.xls'
 
@@ -18,18 +20,19 @@ class TabelleController < ApplicationController
     p :vor_dialog_open
     spaltenwahl_controller.open
     p :dialog_closed
-    spalten = spaltenwahl_controller.aktive_spalten
-    p [:vom_dialog_erhalten=, spalten]
-
-    aktive_spalten_auswahl(spalten)
+    aktive_spalten = spaltenwahl_controller.aktive_spalten
+    p [:vom_dialog_erhalten=, aktive_spalten]
+    inaktive_spalten = model.alle_spalten_namen - aktive_spalten
+    aktive_spalten_auswahl(aktive_spalten, inaktive_spalten)
 
     #spaltenwahl_controller.dispose
     #TODO: nur ausgewaehlte spalten anzeigen (Jtable optionen durchsuchen) mithilfe breite auf 0
   end
 
-  def aktive_spalten_auswahl(spalten)
-    update_model view_model, :aktive_spalten
-    model.aktive_spalten = spalten
+  def aktive_spalten_auswahl(aktive_spalten, inaktive_spalten)
+    update_model view_model, :aktive_spalten, :inaktive_spalten
+    model.aktive_spalten = aktive_spalten
+    model.inaktive_spalten = inaktive_spalten
     signal :aktive_spalten_signal
     update_view
   end
@@ -38,9 +41,20 @@ class TabelleController < ApplicationController
     eg = ExportIntoExcel.new(FILE_PATH)
     update_model view_model, :daten_modell
     eg.get_data(daten_modell)
+    label = "Exportieren erfolgreich (#{FILE_PATH})"
+    open_info_dialog(label)
     update_view
   end
 
+  def exportieren_menuitem_action_performed
+    exportieren_button_action_performed
+  end
+
+  def beenden_menuitem_action_performed
+    label = "Programm beenden?"
+    close if open_bestaetigung_dialog(label)
+  end
+  
   def anzeigen_btn_action_performed
     update_model   view_model, :daten_pfad
     #p model.daten_pfad
@@ -54,6 +68,23 @@ class TabelleController < ApplicationController
     destination_path = dateiauswahl_controller.get_destination_path
     eg = ExportIntoExcel.new(destination_path)
     eg.get_data(daten_modell)
+    label = "Exportieren erfolgreich (#{destination_path})"
+    open_info_dialog(label)
+    update_view
+  end
+
+  def open_info_dialog(label)
+    info_dialog = InfoController.instance
+    info_dialog.set_label(label)
+    info_dialog.open
+  end
+
+  def open_bestaetigung_dialog(label)
+    bestaetigung_dialog = BestaetigungController.instance
+    bestaetigung_dialog.set_label(label)
+    bestaetigung_dialog.open
+    dialog_result = bestaetigung_dialog.dialog_result
+    return dialog_result
   end
 
   def daten_modell

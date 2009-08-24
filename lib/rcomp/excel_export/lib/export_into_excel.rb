@@ -26,16 +26,15 @@ class ExportIntoExcel
   end
 
   def check_value_format(data_model, row, col)
-    @value[row][col] = if data_model.getValueAt(row, col) =~ /[0-9.,][^a-zA-Z]/
+    @value[row][col] = if data_model.getValueAt(row, col) =~ /[a-zA-Z]{0}[0-9]+/ #TODO: einzelene ziffern funktionieren nicht...
       if data_model.getValueAt(row, col).match(/[.,]/)
         data_model.getValueAt(row, col).to_f
       else
         data_model.getValueAt(row, col).to_i
-
       end
     else
-          puts data_model.getValueAt(row, col)
-          data_model.getValueAt(row, col).to_s
+      puts data_model.getValueAt(row, col).to_s
+      data_model.getValueAt(row, col).to_s
     end
   end
 

@@ -2,6 +2,8 @@
 #vielleicht hilft das, damit die pure-Ruby-Spec-AUsführung die Java-Klasse findet?
 #include_class 'tabelle.TabelleFrame'
 
+import javax.swing.JTable;
+
 class TabelleView < ApplicationView
   #set_java_class 'TabelleFrame'
   set_java_class 'tabelle.TabelleFrame'
@@ -36,7 +38,6 @@ class TabelleView < ApplicationView
 
   map :model => :daten_modell, :view => "blatt.model"#, :using => [nil, :default]
   map :model => :alle_spalten, :view => "blatt", :using => [nil, :java_array_to_ruby]
-  map :model => :aktive_spalten_indices, :view => "blatt", :using => [nil, :java_array_to_ruby]
 
   def java_array_to_ruby(java_array_of_indices)
     java_array_of_indices.to_a
@@ -49,15 +50,39 @@ class TabelleView < ApplicationView
   define_signal :name => :aktive_spalten_signal, :handler => :setze_aktive_spalten
 
   def setze_aktive_spalten(model, transfer)
+    blatt.doLayout()#(javax.swing.JTable::AUTO_RESIZE_ALL_COLUMNS)
+    #blatt.setSelectionModel(ListSelectionModel::MULTIPLE_INTERVAL_SELECTION)
+    blatt.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_OFF)
     blatt.setColumnSelectionAllowed(true)
     blatt.setRowSelectionAllowed(false)
     blatt.clearSelection()
+    deaktiviere_inaktive_spalten(model)
+    zeige_aktive_spalten(model)
+    blatt.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_ALL_COLUMNS)
+  end
+
+  def deaktiviere_inaktive_spalten(model)
+    inaktive_spalten_index = []
+    model.inaktive_spalten.each do |name|
+      inaktive_spalten_index << blatt.columnModel.getColumnIndex(name)
+    end
+    inaktive_spalten_index.each do |x|
+      blatt.columnModel.getColumn(x).setMinWidth(0)
+      blatt.columnModel.getColumn(x).setMaxWidth(0)
+      blatt.columnModel.getColumn(x).setWidth(0)
+    end
+  end
+
+  def zeige_aktive_spalten(model)
     aktive_spalten_index = []
     model.aktive_spalten.each do |name|
       aktive_spalten_index << blatt.columnModel.getColumnIndex(name)
     end
     aktive_spalten_index.each do |x|
       blatt.addColumnSelectionInterval(x, x)
+      blatt.columnModel.getColumn(x).setMinWidth(10)
+      blatt.columnModel.getColumn(x).setMaxWidth(2000)
+      blatt.columnModel.getColumn(x).setPreferredWidth(110)
     end
   end
 end

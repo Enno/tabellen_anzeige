@@ -40,7 +40,9 @@ public class TabelleFrame extends javax.swing.JFrame {
         exportieren_button = new javax.swing.JButton();
         menuleiste = new javax.swing.JMenuBar();
         datei_menu = new javax.swing.JMenu();
+        exportieren_menuitem = new javax.swing.JMenuItem();
         exportieren_nach_menuitem = new javax.swing.JMenuItem();
+        beenden_menuitem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         jLabel1.setText("jLabel1");
@@ -59,6 +61,7 @@ public class TabelleFrame extends javax.swing.JFrame {
             }
         ));
         blatt.setColumnSelectionAllowed(true);
+        blatt.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(blatt);
         blatt.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -72,8 +75,14 @@ public class TabelleFrame extends javax.swing.JFrame {
 
         datei_menu.setText("Datei");
 
+        exportieren_menuitem.setText("Exportieren");
+        datei_menu.add(exportieren_menuitem);
+
         exportieren_nach_menuitem.setLabel("Exportieren nach...");
         datei_menu.add(exportieren_nach_menuitem);
+
+        beenden_menuitem.setText("Beenden");
+        datei_menu.add(beenden_menuitem);
 
         menuleiste.add(datei_menu);
 
@@ -134,10 +143,12 @@ public class TabelleFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anzeigen_btn;
+    private javax.swing.JMenuItem beenden_menuitem;
     private javax.swing.JTable blatt;
     private javax.swing.JMenu datei_menu;
     private javax.swing.JTextField daten_pfad;
     private javax.swing.JButton exportieren_button;
+    private javax.swing.JMenuItem exportieren_menuitem;
     private javax.swing.JMenuItem exportieren_nach_menuitem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
