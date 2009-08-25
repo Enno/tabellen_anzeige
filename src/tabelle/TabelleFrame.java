@@ -35,8 +35,15 @@ public class TabelleFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         blatt = new javax.swing.JTable();
         spaltenwahl_btn = new javax.swing.JButton();
+        daten_pfad = new javax.swing.JTextField();
+        anzeigen_btn = new javax.swing.JButton();
+        exportieren_button = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         menuleiste = new javax.swing.JMenuBar();
         datei_menu = new javax.swing.JMenu();
+        exportieren_menuitem = new javax.swing.JMenuItem();
+        exportieren_nach_menuitem = new javax.swing.JMenuItem();
+        beenden_menuitem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         jLabel1.setText("jLabel1");
@@ -54,11 +61,41 @@ public class TabelleFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        blatt.setColumnSelectionAllowed(true);
+        blatt.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(blatt);
+        blatt.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         spaltenwahl_btn.setText("Spaltenwahl");
 
+        daten_pfad.setText("jTextField1");
+
+        anzeigen_btn.setText("Anzeigen");
+
+        exportieren_button.setLabel("Exportieren");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         datei_menu.setText("Datei");
+
+        exportieren_menuitem.setText("Exportieren");
+        datei_menu.add(exportieren_menuitem);
+
+        exportieren_nach_menuitem.setLabel("Exportieren nach...");
+        datei_menu.add(exportieren_nach_menuitem);
+
+        beenden_menuitem.setText("Beenden");
+        datei_menu.add(beenden_menuitem);
+
         menuleiste.add(datei_menu);
 
         jMenu2.setText("Edit");
@@ -71,22 +108,43 @@ public class TabelleFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(spaltenwahl_btn))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(daten_pfad, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spaltenwahl_btn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(anzeigen_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(exportieren_button)
+                                .addGap(30, 30, 30)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(spaltenwahl_btn)
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(daten_pfad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(anzeigen_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(spaltenwahl_btn)
+                            .addComponent(exportieren_button))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(109, 109, 109))))
         );
 
         pack();
@@ -104,10 +162,17 @@ public class TabelleFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton anzeigen_btn;
+    private javax.swing.JMenuItem beenden_menuitem;
     private javax.swing.JTable blatt;
     private javax.swing.JMenu datei_menu;
+    private javax.swing.JTextField daten_pfad;
+    private javax.swing.JButton exportieren_button;
+    private javax.swing.JMenuItem exportieren_menuitem;
+    private javax.swing.JMenuItem exportieren_nach_menuitem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuBar menuleiste;
     private javax.swing.JButton spaltenwahl_btn;

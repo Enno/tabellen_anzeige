@@ -1,7 +1,6 @@
 require 'spaltenwahl_controller'
 require "#{File.dirname(File.dirname(File.dirname(__FILE__)))}/lib/rcomp/excel_export/lib/export_into_excel"
 require 'dateiauswahl_controller'
-
 require 'info_controller'
 require 'bestaetigung_controller'
 
@@ -22,7 +21,6 @@ class TabelleController < ApplicationController
     aktive_spalten_auswahl #(aktive_spalten, inaktive_spalten)
 
     #spaltenwahl_controller.dispose
-    #TODO: nur ausgewaehlte spalten anzeigen (Jtable optionen durchsuchen) mithilfe breite auf 0
   end
 
   def aktive_spalten_auswahl #(aktive_spalten, inaktive_spalten)
