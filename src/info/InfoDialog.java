@@ -32,12 +32,12 @@ public class InfoDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ok_button = new javax.swing.JButton();
+        button1_button = new javax.swing.JButton();
         text_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        ok_button.setText("Ok");
+        button1_button.setText("Ok");
 
         text_label.setText("jLabel1");
 
@@ -52,7 +52,7 @@ public class InfoDialog extends javax.swing.JDialog {
                         .addComponent(text_label, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(176, 176, 176)
-                        .addComponent(ok_button, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(button1_button, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -61,7 +61,7 @@ public class InfoDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(text_label, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(ok_button)
+                .addComponent(button1_button)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -86,7 +86,7 @@ public class InfoDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ok_button;
+    private javax.swing.JButton button1_button;
     private javax.swing.JLabel text_label;
     // End of variables declaration//GEN-END:variables
 

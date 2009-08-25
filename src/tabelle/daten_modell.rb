@@ -2,7 +2,7 @@
 
 # encoding: utf-8
 
-require 'ffmath'
+# require 'ffmath'
 
 
 class DatenModell <  javax.swing.table.AbstractTableModel

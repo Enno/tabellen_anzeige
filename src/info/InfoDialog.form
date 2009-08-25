@@ -30,7 +30,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
-                      <Component id="ok_button" min="-2" pref="163" max="-2" attributes="0"/>
+                      <Component id="button1_button" min="-2" pref="163" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -43,14 +43,14 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="text_label" min="-2" pref="29" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="ok_button" min="-2" max="-2" attributes="0"/>
+              <Component id="button1_button" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="24" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="ok_button">
+    <Component class="javax.swing.JButton" name="button1_button">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ok"/>
       </Properties>

@@ -1,7 +1,7 @@
 class InfoModel
-  attr_accessor :message
+  attr_accessor :label, :button1_text
 
   def initialize
-    @message = ""
+    @label = @button1_text = ""
   end
 end

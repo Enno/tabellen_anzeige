@@ -9,5 +9,6 @@ class InfoView < ApplicationView
 
   end
 
-  map :view => "text_label.text", :model => :message
+  map :view => "text_label.text",     :model => :label
+  map :view => "button1_button.text", :model => :button1_text
 end

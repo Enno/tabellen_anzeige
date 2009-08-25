@@ -17,14 +17,10 @@ class BestaetigungController < ApplicationController
     close
   end
 
-  def set_label(label, button1_text, button2_text)
-#    dialog_texte.each do |was, inhalt|
-#      model.send("#{was}=", inhalt)
-#    end
-#   model.alle_texte = 
-    model.label = label
-    model.button1_text = button1_text
-    model.button2_text = button2_text
+  def set_label(dialog_text)
+    dialog_text.each do |dialog_element, text|
+      model.send("#{dialog_element}=", text)
+    end
     update_view
   end
 
