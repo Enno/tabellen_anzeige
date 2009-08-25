@@ -58,17 +58,25 @@ class ExportIntoExcel
     sheet = book.create_worksheet :name => @worksheet
     column_name.each_with_index do |name, y|
       sheet[0, y] = name
-      sheet.row(0).set_format y, Spreadsheet::Format.new(:weight => :bold, :align => :center, :border => 1, :pattern_bg_color => 'gray')
+      sheet.row(0).set_format y, Spreadsheet::Format.new(
+        :weight => :bold,
+        :align  => :center,
+        :border => 1,
+        :pattern => 1,
+        :pattern_fg_color => 'gray')
     end
     values.each_with_index do |row, x|
       row.each_with_index do |value, y|
         sheet[x + 1, y] = value
-        sheet.row(x + 1).set_format y, Spreadsheet::Format.new(:align => :center, :border => 1, :pattern_bg_color => 'gray')
+        sheet.row(x + 1).set_format y, Spreadsheet::Format.new(
+          :align => :center,
+          :border => 1,
+          :pattern => 1,
+          :pattern_fg_color => 'gray')
       end
     end
     book.write @destination
   end
 end
 
-#TODO: formatieren (grau fuer spaltenueberschriften) und nur fuer belegte zellen
 #TODO: Formeln und Kommentare mit spreadsheet moeglich?
