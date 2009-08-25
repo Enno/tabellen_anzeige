@@ -1,5 +1,4 @@
-
-#include_class 'spaltenwahl.SpaltenwahlDialog'
+require 'java'
 
 class SpaltenwahlView < ApplicationView
   set_java_class "spaltenwahl.SpaltenwahlDialog"
@@ -16,7 +15,7 @@ class SpaltenwahlView < ApplicationView
   map :view => "spaltenliste",           :model => :alle_spalten, :using => [nil, :hole_alle]
 
   def setze_alle(array_of_strings)
-    array_of_strings.to_java
+    array_of_strings.to_java(:String)
   end
 
   def hole_alle(jlist_object)
@@ -28,6 +27,7 @@ class SpaltenwahlView < ApplicationView
 
   map :view => "spaltenliste.selected_indices", :model => :aktive_spalten_indices, :using => [:setze_aktive, :hole_aktive]
   #map :view => "spaltenliste.selected_values", :model => :aktive_spalten, :using => [:setze_aktive, :hole_aktive]
+
   def setze_aktive(array_of_indices)
     array_of_indices.to_java(Java::int)
   end

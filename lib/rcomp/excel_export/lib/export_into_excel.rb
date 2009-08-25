@@ -3,44 +3,80 @@ require 'spreadsheet'
 class ExportIntoExcel
   def initialize(filepath)
     Spreadsheet.client_encoding = 'UTF-8'
-    @file = filepath
-    puts "File:" + @file.to_s
-    puts @file.inspect
+    @destination = filepath
     @worksheet = 'data'
   end
 
-  def exportieren(daten_modell)
-    blatt = daten_modell
-    rowcount_value = blatt.getRowCount
-    colcount_value = blatt.getColumnCount
-    wert = Array.new(rowcount_value) {|i| Array.new(colcount_value, nil)}
+  def get_all_data(data_model)
+    rowcount_value = data_model.getRowCount
+    colcount_value = data_model.getColumnCount
+    values = Array.new(rowcount_value) {|i| Array.new(colcount_value, nil)}
     column_name = Array.new(colcount_value)
     colcount_value.times do |col|
-      column_name[col] = blatt.getColumnName(col)
-      #puts column_name[col]
+      column_name[col] = data_model.getColumnName(col).to_s
       rowcount_value.times do |row|
-        wert[row][col] = blatt.getValueAt(row, col)
+        values[row][col] = data_model.getValueAt(row, col) ? check_value_format(data_model, row, col) : nil
       end
     end
+    write_into_excel_file(column_name, values)
+  end
 
+  def get_selected_data(data_model, active_columns)
+    rowcount_value = data_model.getRowCount
+    colcount_value = data_model.getColumnCount
+    values = Array.new(rowcount_value) {|i| Array.new(active_columns.size-1, nil)}
+    column_name = Array.new(colcount_value)
+    colcount_value.times do |col|
+      column_name[col] = data_model.getColumnName(col).to_s
+    end
+    active_columns.each_with_index do |name, new_col|
+      col = column_name.index(name)
+      rowcount_value.times do |row|
+        values[row][new_col] = data_model.getValueAt(row, col) ? check_value_format(data_model, row, col) : nil
+      end
+    end
+    write_into_excel_file(active_columns, values)
+  end
+
+  def check_value_format(data_model, row, col)
+    case data_model.getValueAt(row, col)
+    when /^[\d]*$/  #integer
+      data_model.getValueAt(row, col).to_i
+    when /^[\d.,]*$/  #float
+      data_model.getValueAt(row, col).to_f
+    when /^[\w]*$/  #string (bsp: kommentar)
+      data_model.getValueAt(row, col).to_s
+    when /^[=A-Z($0-9,)\S]*$/ #formel
+      data_model.getValueAt(row, col).to_s
+    else
+      nil
+    end
+  end
+
+  def write_into_excel_file(column_name, values)
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet :name => @worksheet
-    #puts wert.inspect
     column_name.each_with_index do |name, y|
-    sheet[0, y] = name
-    sheet.row(0).default_format = Spreadsheet::Format.new :weight => :bold, :size => 14, :align => :center, :border => 1
+      sheet[0, y] = name
+      sheet.row(0).set_format y, Spreadsheet::Format.new(
+        :weight => :bold,
+        :align  => :center,
+        :border => 1,
+        :pattern => 1,
+        :pattern_fg_color => 'gray')
     end
-    wert.each_with_index do |zeile, x|
-      zeile.each_with_index do |wert, y|
-        sheet[x + 1, y] = wert
+    values.each_with_index do |row, x|
+      row.each_with_index do |value, y|
+        sheet[x + 1, y] = value
+        sheet.row(x + 1).set_format y, Spreadsheet::Format.new(
+          :align => :center,
+          :border => 1,
+          :pattern => 1,
+          :pattern_fg_color => 'gray')
       end
     end
-    book.write @file
+    book.write @destination
   end
 end
 
-#TODO: case fuer integer, float etc (datenvorverarbeitung)
-#TODO: refactoring
-#TODO: formatieren (grau fuer spaltenueberschriften) und nur fuer belegte zellen
 #TODO: Formeln und Kommentare mit spreadsheet moeglich?
-#TODO: dialog zur auswahlbestaetigung

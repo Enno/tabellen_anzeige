@@ -16,7 +16,6 @@ class SpaltenwahlController < ApplicationController
     close
   end
 
-
   def aktive_spalten
     update_model view_model, :aktive_spalten
     model.aktive_spalten

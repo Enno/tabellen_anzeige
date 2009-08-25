@@ -2,7 +2,7 @@
 
 # encoding: utf-8
 
-require 'ffmath'
+#require 'ffmath'
 
 
 class DatenModell <  javax.swing.table.AbstractTableModel
@@ -73,5 +73,4 @@ class DatenModellDummy <  javax.swing.table.AbstractTableModel
   def isCellEditable(i, j)
     true
   end
-
 end
