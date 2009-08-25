@@ -60,7 +60,6 @@ describe ExportIntoExcel do
     book.worksheet(0).row(z+1)[s].should == daten_modell_dummy.getValueAt(z,s).to_s
   end
 
-
 end
 
 

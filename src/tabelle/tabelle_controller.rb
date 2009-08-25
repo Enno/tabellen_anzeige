@@ -53,7 +53,7 @@ class TabelleController < ApplicationController
   
   def anzeigen_btn_action_performed
     update_model   view_model, :daten_pfad
-    #p model.daten_pfad
+    p model.daten_pfad
     signal :neuer_daten_pfad
     update_view
   end
@@ -67,7 +67,11 @@ class TabelleController < ApplicationController
     dateiauswahl_controller.open
     destination_path = dateiauswahl_controller.get_destination_path
     eg = ExportIntoExcel.new(destination_path)
-    case open_bestaetigung_dialog(label, button1_text, button2_text)
+    case open_bestaetigung_dialog(label, button1_text, button2_text
+#        :label        => "Welche Spalten sollen exportiert werden?",
+#        :button1_text => "Alle",
+#        :button2_text => "Ausgewählte"
+      )
     when true
       eg.get_all_data(daten_modell)
       label = "Exportieren erfolgreich (#{destination_path})"

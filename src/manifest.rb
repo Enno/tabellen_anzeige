@@ -2,7 +2,7 @@ $LOAD_PATH.clear #ensure load path is cleared so system gems and libraries are n
 # Load current and subdirectories in src onto the load path
 $LOAD_PATH << File.dirname(__FILE__)
 
-gem_names = ["rspec", "facets", "dbf-1.0.5", "spreadsheet-0.6.4", "ruby-ole-1.2.10"]
+gem_names = ["rspec", "facets-2.6.0", "dbf-1.0.5", "spreadsheet-0.6.4", "ruby-ole-1.2.10"]
 
 Dir.glob(File.expand_path(File.dirname(__FILE__) + "/**/*").gsub('%20', ' ')).each do |directory|
   next if gem_names.any? {|gem_name| directory =~ /\/#{gem_name}\// }
