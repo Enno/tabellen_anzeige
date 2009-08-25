@@ -36,11 +36,6 @@ class TabelleView < ApplicationView
     blatt.model = model.daten_modell
   end
 
-<<<<<<< HEAD:src/tabelle/tabelle_view.rb
-  map :model => :daten_modell, :view => "blatt.model"#, :using => [nil, :default]
-
-
-=======
   map :model => :daten_modell, :view => "blatt.model"
   map :model => :alle_spalten, :view => "blatt", :using => [nil, :default]
 
@@ -77,5 +72,4 @@ class TabelleView < ApplicationView
     end
     blatt.addColumnSelectionInterval(0, model.aktive_spalten.size - 1)
   end
->>>>>>> e5694a027fc417c1e5f07ecfe86468d34ccb2c7d:src/tabelle/tabelle_view.rb
 end
