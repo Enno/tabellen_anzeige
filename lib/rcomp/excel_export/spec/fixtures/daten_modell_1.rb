@@ -10,9 +10,9 @@ class DatenModellDummy <  javax.swing.table.AbstractTableModel
     @daten = [
       [1,  2, 3,  4.5, nil],
       [21,22,23, 24.2, nil],
-      [31,32,33, "a9", nil],
-      [41,42,43, 44.4, nil],
-      [51,52,53, 54.5, nil]
+      [31,32,33, "a" , nil],
+      [41,42,"=SUMME($A1,$B1)", 44.4, nil],
+      ["Kommentar",52,53, 54.5, nil]
       ]
       p @daten
   end

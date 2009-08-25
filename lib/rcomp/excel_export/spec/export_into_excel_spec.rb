@@ -20,7 +20,7 @@ describe ExportIntoExcel do
   end
 
   it "sollte integer auslesen" do
-    z, s = 1, 1
+    z, s = 0, 0
     book = Spreadsheet.open filepath
     book.worksheet(0).row(z+1)[s].should == daten_modell_dummy.getValueAt(z,s).to_i
   end
@@ -46,6 +46,18 @@ describe ExportIntoExcel do
   it "sollte spaltennamen auslesen" do
     book = Spreadsheet.open filepath
     book.worksheet(0).row(0)[2].should == daten_modell_dummy.getColumnName(2)
+  end
+
+  it "sollte Formeln schreiben" do
+    z, s = 3, 2
+    book = Spreadsheet.open filepath
+    book.worksheet(0).row(z+1)[s].should == daten_modell_dummy.getValueAt(z,s)
+  end
+
+  it "sollte Kommentare schreiben" do
+    z, s = 4, 0
+    book = Spreadsheet.open filepath
+    book.worksheet(0).row(z+1)[s].should == daten_modell_dummy.getValueAt(z,s).to_s
   end
 
 
