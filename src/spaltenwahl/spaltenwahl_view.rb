@@ -15,7 +15,6 @@ class SpaltenwahlView < ApplicationView
   map :view => "spaltenliste",           :model => :alle_spalten, :using => [nil, :hole_alle]
 
   def setze_alle(array_of_strings)
-    puts array_of_strings
     array_of_strings.to_java(:String)
   end
 

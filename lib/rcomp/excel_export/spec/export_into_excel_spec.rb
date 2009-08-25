@@ -10,7 +10,7 @@ describe ExportIntoExcel do
   daten_modell_dummy = DatenModellDummy.new
   File.delete(filepath) rescue nil
   @export_into_excel = ExportIntoExcel.new(filepath)
-  @export_into_excel.get_data(daten_modell_dummy)
+  @export_into_excel.get_all_data(daten_modell_dummy)
   before(:each) do
     
   end

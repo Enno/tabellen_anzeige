@@ -35,12 +35,4 @@ class TabelleModel
     end
     return @spaltenname
   end
-
-  def alle_spalten_namen_indices
-    0.upto(daten_modell.getColumnCount-1) do |x|
-      @spaltenindex[x] = x
-    end
-    return @spaltenindex
-  end
-
 end

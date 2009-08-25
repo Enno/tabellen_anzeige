@@ -36,16 +36,8 @@ class TabelleView < ApplicationView
     blatt.model = model.daten_modell
   end
 
-  map :model => :daten_modell, :view => "blatt.model"#, :using => [nil, :default]
-  map :model => :alle_spalten, :view => "blatt", :using => [nil, :java_array_to_ruby]
-
-  def java_array_to_ruby(java_array_of_indices)
-    java_array_of_indices.to_a
-  end
-
-  def ruby_array_of_indices_to_java(array_of_indices)
-    array_of_indices.to_java(Java::int)
-  end
+  map :model => :daten_modell, :view => "blatt.model"
+  map :model => :alle_spalten, :view => "blatt", :using => [nil, :default]
 
   define_signal :name => :aktive_spalten_signal, :handler => :setze_aktive_spalten
 
@@ -62,27 +54,22 @@ class TabelleView < ApplicationView
   end
 
   def deaktiviere_inaktive_spalten(model)
-    inaktive_spalten_index = []
     model.inaktive_spalten.each do |name|
-      inaktive_spalten_index << blatt.columnModel.getColumnIndex(name)
-    end
-    inaktive_spalten_index.each do |x|
-      blatt.columnModel.getColumn(x).setMinWidth(0)
-      blatt.columnModel.getColumn(x).setMaxWidth(0)
-      blatt.columnModel.getColumn(x).setWidth(0)
+      col_index = blatt.columnModel.getColumnIndex(name)
+      blatt.columnModel.getColumn(col_index).setMinWidth(0)
+      blatt.columnModel.getColumn(col_index).setMaxWidth(0)
+      blatt.columnModel.getColumn(col_index).setWidth(0)
     end
   end
 
   def zeige_aktive_spalten(model)
-    aktive_spalten_index = []
-    model.aktive_spalten.each do |name|
-      aktive_spalten_index << blatt.columnModel.getColumnIndex(name)
+    model.aktive_spalten.each_with_index do |name, index|
+      col_index = blatt.columnModel.getColumnIndex(name)
+      blatt.columnModel.getColumn(col_index).setMinWidth(10)
+      blatt.columnModel.getColumn(col_index).setMaxWidth(10000)
+      blatt.columnModel.getColumn(col_index).setPreferredWidth(400)
+      blatt.moveColumn(col_index, index)
     end
-    aktive_spalten_index.each do |x|
-      blatt.addColumnSelectionInterval(x, x)
-      blatt.columnModel.getColumn(x).setMinWidth(10)
-      blatt.columnModel.getColumn(x).setMaxWidth(2000)
-      blatt.columnModel.getColumn(x).setPreferredWidth(110)
-    end
+    blatt.addColumnSelectionInterval(0, model.aktive_spalten.size - 1)
   end
 end

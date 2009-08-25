@@ -26,7 +26,7 @@ class DatenModellDummy <  javax.swing.table.AbstractTableModel
   end
 
   def getColumnName(j)
-    j*j
+    "test#{j*j}"
   end
 
   def getValueAt(i, j)

@@ -15,21 +15,18 @@ class TabelleController < ApplicationController
     spaltenwahl_controller = SpaltenwahlController.instance
     spaltenwahl_controller.spalten_eintragen :alle => model.alle_spalten_namen,
       :aktive => model.alle_spalten_namen #bei init alle gesetzt
-    p :vor_dialog_open
     spaltenwahl_controller.open
-    p :dialog_closed
-    aktive_spalten = spaltenwahl_controller.aktive_spalten
-    p [:vom_dialog_erhalten=, aktive_spalten]
-    inaktive_spalten = model.alle_spalten_namen - aktive_spalten
-    aktive_spalten_auswahl(aktive_spalten, inaktive_spalten)
+    @aktive_spalten = spaltenwahl_controller.aktive_spalten
+    @inaktive_spalten = model.alle_spalten_namen - @aktive_spalten
+    aktive_spalten_auswahl #(aktive_spalten, inaktive_spalten)
 
     #spaltenwahl_controller.dispose
   end
 
-  def aktive_spalten_auswahl(aktive_spalten, inaktive_spalten)
+  def aktive_spalten_auswahl #(aktive_spalten, inaktive_spalten)
     update_model view_model, :aktive_spalten, :inaktive_spalten
-    model.aktive_spalten = aktive_spalten
-    model.inaktive_spalten = inaktive_spalten
+    model.aktive_spalten = @aktive_spalten
+    model.inaktive_spalten = @inaktive_spalten
     signal :aktive_spalten_signal
     update_view
   end
@@ -37,7 +34,7 @@ class TabelleController < ApplicationController
   def exportieren_button_action_performed
     eg = ExportIntoExcel.new(FILE_PATH)
     update_model view_model, :daten_modell
-    eg.get_data(daten_modell)
+    eg.get_all_data(daten_modell)
     label = "Exportieren erfolgreich (#{FILE_PATH})"
     open_info_dialog(label)
     update_view
@@ -76,9 +73,14 @@ class TabelleController < ApplicationController
       label = "Exportieren erfolgreich (#{destination_path})"
       open_info_dialog(label)
     when false
-      eg.get_selected_data(daten_modell)
-      label = "in progress"
-      open_info_dialog(label)
+      if @aktive_spalten
+        eg.get_selected_data(daten_modell, @aktive_spalten)
+        label = "Exportieren erfolgreich (#{destination_path})"
+        open_info_dialog(label)
+      else
+        label = "Sie haben keine Spalte(n) ausgewählt"
+        open_info_dialog(label)
+      end
     end
     update_view
   end
