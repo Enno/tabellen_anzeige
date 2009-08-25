@@ -15,9 +15,9 @@ when /^win|mswin/i # Windows specific code
 when /linux/i # Linux specific code
 end
 
-$prot_datei = File.open "rc_protokoll.txt", "a"
+#$prot_datei = File.open "rc_protokoll.txt", "a"
 $old_stdout = $stdout
-$stdout = $stderr = $prot_datei
+#$stdout = $stderr = $prot_datei
 begin
   puts "------------------------------------------------"  
   puts
@@ -67,5 +67,5 @@ end
 
 
 ensure
-$stdout = $stderr = $old_stdout
+#$stdout = $stderr = $old_stdout
 end

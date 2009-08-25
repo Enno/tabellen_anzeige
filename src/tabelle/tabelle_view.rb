@@ -5,11 +5,11 @@
 class TabelleView < ApplicationView
   #set_java_class 'TabelleFrame'
   set_java_class 'tabelle.TabelleFrame'
-
+  
   #nest :sub_view => :spaltenwahl_dialog, :using => [:define_popup_parent, nil]
   def define_popup_parent(view, component, model, transfer)
-     p :define_popup_parent
-     view.parent_component = @main_view_component
+    p :define_popup_parent
+    view.parent_component = @main_view_component
   end
 
   def load
@@ -23,7 +23,7 @@ class TabelleView < ApplicationView
 
     #blatt.setColumnModel cmodel
 
-    #self.blatt.setModel DatenModell.new
+    #self.blatt.setModel DatenModellDummy.new
   end
 
   map :model => :daten_pfad, :view => "daten_pfad.text"
@@ -33,5 +33,8 @@ class TabelleView < ApplicationView
   def neuer_daten_pfad(model, transfer)
     blatt.model = model.daten_modell
   end
+
+  map :model => :daten_modell, :view => "blatt.model"#, :using => [nil, :default]
+
 
 end

@@ -2,7 +2,7 @@ $LOAD_PATH.clear #ensure load path is cleared so system gems and libraries are n
 # Load current and subdirectories in src onto the load path
 $LOAD_PATH << File.dirname(__FILE__)
 
-gem_names = ["rspec", "facets", "dbf-1.0.5"]
+gem_names = ["rspec", "facets", "dbf-1.0.5", "spreadsheet-0.6.4", "ruby-ole-1.2.10"]
 
 Dir.glob(File.expand_path(File.dirname(__FILE__) + "/**/*").gsub('%20', ' ')).each do |directory|
   next if gem_names.any? {|gem_name| directory =~ /\/#{gem_name}\// }
@@ -76,7 +76,7 @@ def add_gem_path(gem_path)
   else
     ["lib"]
   end
-  # relative_lib_paths = %w[lib/core lib/lore lib/more] if gem_path =~ /facets/ then # TODO Quick hack (wie funktioniert File.exist? für jars?)
+  # relative_lib_paths = %w[lib/core lib/lore lib/more] if gem_path =~ /facets/ then 
   relative_lib_paths.each do |rel_lib_path|
     #add_to_load_path robust_expand_path rel_lib_path, gem_path
     full_gem_path = robust_expand_path(gem_path, File.dirname(__FILE__))
