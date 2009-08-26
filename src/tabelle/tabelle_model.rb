@@ -5,7 +5,13 @@ require 'daten_modell'
 
 class TabelleModel
   attr_reader :daten_pfad
-  attr_accessor :daten_modell, :aktive_spalten, :inaktive_spalten, :alle_spalten
+  attr_accessor :daten_modell, :aktive_spalten, :inaktive_spalten, :alle_spalten, :blatt
+
+  def blatt= jtable
+    p jtable
+    @blatt = jtable
+  end
+
   def initialize
     super
     #@daten_modell = nil
