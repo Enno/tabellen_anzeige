@@ -15,7 +15,7 @@ class TabelleView < ApplicationView
   end
 
   def load
-
+    p :load
 
     cmodel = blatt.getColumnModel
     #tbelle.setColumnSelectionAllowed true

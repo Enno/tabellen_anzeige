@@ -3,14 +3,12 @@
 #require 'ffmath'
 require 'daten_modell'
 
+import javax.swing.table.DefaultTableColumnModel
+
 class TabelleModel
   attr_reader :daten_pfad
   attr_accessor :daten_modell, :aktive_spalten, :inaktive_spalten, :alle_spalten, :col_model
 
-  def initialize
-    @col_model = DefaultTableColumnModel.new
-    p @col_model
-  end
 
   def blatt= jtable
     p jtable
@@ -21,6 +19,9 @@ class TabelleModel
 
   def initialize
     super
+    p :init
+    @col_model = DefaultTableColumnModel.new
+    p @col_model
     #@daten_modell = nil
     @daten_modell_dummy = @daten_modell = DatenModellDummy.new
     @spaltenname = []
