@@ -39,6 +39,7 @@ class TabelleView < ApplicationView
   map :model => :daten_modell, :view => "blatt.model"
   map :model => :alle_spalten, :view => "blatt", :using => [nil, :default]
 
+  map :model => :blatt, :view => "blatt"
 #  define_signal :name => :aktive_spalten_signal, :handler => :setze_aktive_spalten
 #
 #  def setze_aktive_spalten(model, transfer)
