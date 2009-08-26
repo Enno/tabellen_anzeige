@@ -21,13 +21,20 @@ class TabelleController < ApplicationController
     aktive_spalten_auswahl
   end
 
-  def aktive_spalten_auswahl 
+  def aktive_spalten_auswahl
     update_model view_model, :aktive_spalten, :inaktive_spalten
     model.aktive_spalten = @aktive_spalten
     model.inaktive_spalten = @inaktive_spalten
-    signal :aktive_spalten_signal
     update_view
   end
+
+  #  def aktive_spalten_auswahl
+  #    update_model view_model, :aktive_spalten, :inaktive_spalten
+  #      model.aktive_spalten = @aktive_spalten
+  #      model.inaktive_spalten = @inaktive_spalten
+  #    signal :aktive_spalten_signal
+  #    update_view
+  #  end
 
   def exportieren_button_action_performed
     eg = ExportIntoExcel.new(FILE_PATH)

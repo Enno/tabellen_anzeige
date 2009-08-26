@@ -35,4 +35,34 @@ class TabelleModel
     end
     return @spaltenname
   end
+
+  def aktive_spalten_array=(active_view)
+    begin
+      p active_view.inspect, self.aktive_spalten
+      active_view.doLayout()#(javax.swing.JTable::AUTO_RESIZE_ALL_COLUMNS)
+      #blatt.setSelectionModel(ListSelectionModel::MULTIPLE_INTERVAL_SELECTION)
+      active_view.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_OFF)
+      active_view.setColumnSelectionAllowed(true)
+      active_view.setRowSelectionAllowed(false)
+      active_view.clearSelection()
+
+#      daten_modell.inaktive_spalten.each do |name|
+#        col_index = active.columnModel.getColumnIndex(name)
+#        active_view.columnModel.getColumn(col_index).setMinWidth(0)
+#        active_view.columnModel.getColumn(col_index).setMaxWidth(0)
+#        active_view.columnModel.getColumn(col_index).setWidth(0)
+#      end
+#
+#      daten_modell.aktive_spalten.each_with_index do |name, index|
+#        col_index = active_view.columnModel.getColumnIndex(name)
+#        active_view.columnModel.getColumn(col_index).setMinWidth(10)
+#        active_view.columnModel.getColumn(col_index).setMaxWidth(10000)
+#        active_view.columnModel.getColumn(col_index).setPreferredWidth(400)
+#        active_view.moveColumn(col_index, index)
+#      end
+#      active_view.addColumnSelectionInterval(0, daten_modell.aktive_spalten.size - 1)
+      active_view.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_ALL_COLUMNS)
+    end
+  end
+
 end
