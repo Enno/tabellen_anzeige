@@ -22,7 +22,7 @@ class TabelleController < ApplicationController
   end
 
   def aktive_spalten_auswahl
-    update_model view_model, :aktive_spalten, :inaktive_spalten, :blatt
+    update_model view_model, :aktive_spalten, :inaktive_spalten, :col_model
     model.aktive_spalten = @aktive_spalten
     model.inaktive_spalten = @inaktive_spalten
     update_view

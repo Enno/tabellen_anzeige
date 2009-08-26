@@ -5,10 +5,17 @@ require 'daten_modell'
 
 class TabelleModel
   attr_reader :daten_pfad
-  attr_accessor :daten_modell, :aktive_spalten, :inaktive_spalten, :alle_spalten, :blatt
+  attr_accessor :daten_modell, :aktive_spalten, :inaktive_spalten, :alle_spalten, :col_model
+
+  def initialize
+    @col_model = DefaultTableColumnModel.new
+    p @col_model
+  end
 
   def blatt= jtable
     p jtable
+    @col_model = jtable.getColumnModel
+    p @col_model
     @blatt = jtable
   end
 
@@ -67,7 +74,7 @@ class TabelleModel
 #        active_view.moveColumn(col_index, index)
 #      end
 #      active_view.addColumnSelectionInterval(0, daten_modell.aktive_spalten.size - 1)
-      active_view.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_ALL_COLUMNS)
+      #active_view.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_ALL_COLUMNS)
     end
   end
 

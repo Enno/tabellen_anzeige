@@ -36,7 +36,8 @@ class TabelleView < ApplicationView
     blatt.model = model.daten_modell
   end
 
-  map :model => :blatt, :view => "blatt"
+  map :model => :blatt, :view => "blatt", :using => [nil, :default]
+  map :model => :col_model, :view => "blatt.column_model", :using => [:default, :default]
   map :model => :daten_modell, :view => "blatt.model"
   map :model => :alle_spalten, :view => "blatt", :using => [nil, :default]
 
