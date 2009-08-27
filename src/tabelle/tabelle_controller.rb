@@ -12,21 +12,14 @@ class TabelleController < ApplicationController
   set_close_action :exit
 
   def spaltenwahl_btn_action_performed
-    update_model view_model, :col_model #,  :aktive_spalten, :inaktive_spalten
+    model.aktive_spalten = model.aktive_spalten ? model.aktive_spalten : model.alle_spalten_namen
+    update_model view_model, :blatt, :col_model
     spaltenwahl_controller = SpaltenwahlController.instance
     spaltenwahl_controller.spalten_eintragen :alle => model.alle_spalten_namen,
-      :aktive => model.alle_spalten_namen #bei init alle gesetzt
+      :aktive => model.aktive_spalten #bei init alle gesetzt
     spaltenwahl_controller.open
     model.aktive_spalten = spaltenwahl_controller.aktive_spalten
     model.inaktive_spalten = model.alle_spalten_namen - model.aktive_spalten
-    update_view
-#    aktive_spalten_auswahl
-  end
-
-  def aktive_spalten_auswahl_xxxxx
-    model.aktive_spalten   = @aktive_spalten
-    model.inaktive_spalten = @inaktive_spalten
-    signal :aktive_spalten_signal
     update_view
   end
 
@@ -77,8 +70,8 @@ class TabelleController < ApplicationController
         :button1_text => "Ok"
       )
     when false
-      if @aktive_spalten
-        eg.get_selected_data(daten_modell, @aktive_spalten)
+      if model.aktive_spalten
+        eg.get_selected_data(daten_modell, model.aktive_spalten)
         open_info_dialog(
           :label        => "Exportieren erfolgreich (#{destination_path})",
           :button1_text => "Ok"

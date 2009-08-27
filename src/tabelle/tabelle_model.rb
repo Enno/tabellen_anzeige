@@ -7,11 +7,11 @@ import javax.swing.table.DefaultTableColumnModel
 
 class TabelleModel
   attr_reader :daten_pfad
-  attr_accessor :daten_modell, :col_model, :aktive_spalten, :inaktive_spalten
+  attr_accessor :daten_modell, :col_model, :aktive_spalten, :inaktive_spalten, :blatt
 
 
   def blatt= jtable
-    p jtable
+    p [:blatt, jtable]
     @col_model = jtable.getColumnModel
     p @col_model
     @blatt = jtable
@@ -20,19 +20,18 @@ class TabelleModel
     @blatt.setColumnSelectionAllowed(true)
     @blatt.setRowSelectionAllowed(false)
     @blatt.clearSelection()
-
-    @blatt.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_ALL_COLUMNS)
+    #@blatt.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_ALL_COLUMNS)
+    @blatt
   end
 
   def initialize
     super
     p :init
-    @col_model = DefaultTableColumnModel.new
-#    @normales_column_model = false
-    #@daten_modell = nil
-    @daten_modell_dummy = @daten_modell = DatenModellDummy.new
-    @spaltenname = []
-    @spaltennamen = []
+    @col_model           = DefaultTableColumnModel.new
+    @daten_modell_dummy  = @daten_modell = DatenModellDummy.new
+    @spaltenname         = []
+    @col_total_width_old = []
+    @col_pref_width_old  = []
   end
 
   def daten_pfad=(daten_pfad)
@@ -57,39 +56,42 @@ class TabelleModel
     return @spaltenname
   end
 
-#  def col_model= cm
-#    @normales_column_model = true
-#    @col_model = cm
-#  end
-  
   def col_model
-    setze_aktive_verstecke_inaktive_spalten # if @normales_column_model
+    setze_aktive_verstecke_inaktive_spalten 
     @col_model
   end
 
-  def inaktive_spalten= spalten_array
-    p spalten_array
-    @inaktive_spalten = spalten_array
-  end
-
   def setze_aktive_verstecke_inaktive_spalten
+    jt = @blatt
     cm = @col_model
     p ["akt/inakt", aktive_spalten, inaktive_spalten]
     return unless aktive_spalten
-    inaktive_spalten.each do |name|
+    alle_spalten_namen.each do |name|
+      #p [:alle, name]
       col_index = cm.getColumnIndex(name)
+      @col_pref_width_old[0] = 200
+      #puts name, col_index, cm.getColumn(col_index).getPreferredWidth()
+      #@col_total_width_old[col_index] = cm.getTotalColumnWidth == 0 ? @col_total_width_old[col_index] : cm.getTotalColumnWidth()
+      @col_pref_width_old[col_index]  = cm.getColumn(col_index).getPreferredWidth() == 0 ? @col_pref_width_old[col_index] : cm.getColumn(col_index).getPreferredWidth()
+    end
+    return unless aktive_spalten
+    inaktive_spalten.each do |name|
+      #p [:inaktive, name]
+      col_index            = cm.getColumnIndex(name)
       cm.getColumn(col_index).setMinWidth(0)
       cm.getColumn(col_index).setMaxWidth(0)
       cm.getColumn(col_index).setWidth(0)
     end
     aktive_spalten.each_with_index do |name, index|
+      #p [:aktive, name]
       col_index = cm.getColumnIndex(name)
       cm.getColumn(col_index).setMinWidth(10)
       cm.getColumn(col_index).setMaxWidth(10000)
-      cm.getColumn(col_index).setPreferredWidth(400)
-      #blatt.moveColumn(col_index, index)
+      cm.getColumn(col_index).setPreferredWidth(@col_pref_width_old[0])
+      jt.moveColumn(col_index, index)
     end
-    #blatt.addColumnSelectionInterval(0, model.aktive_spalten.size - 1)
+    jt.addColumnSelectionInterval(0, aktive_spalten.size - 1)
+    jt.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_OFF)
   end
 
 

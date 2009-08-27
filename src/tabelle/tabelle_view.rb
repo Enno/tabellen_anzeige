@@ -36,16 +36,8 @@ class TabelleView < ApplicationView
     blatt.model = model.daten_modell
   end
 
-  define_signal :name => :aktive_spalten_signal, :handler => :setze_aktive_verstecke_inaktive_spalten
-  def setze_aktive_verstecke_inaktive_spalten(model, transfer)
-    p :signal
-  end
-
-
-
-  map :model => :blatt, :view => "blatt", :using => [nil, :default]
-  map :model => :col_model, :view => "blatt.column_model"
-  
+  map :model => :blatt,        :view => "blatt", :using => [nil, :default]
+  map :model => :col_model,    :view => "blatt.column_model"
   map :model => :daten_modell, :view => "blatt.model"
 
 end

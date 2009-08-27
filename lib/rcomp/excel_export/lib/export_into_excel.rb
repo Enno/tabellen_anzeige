@@ -70,9 +70,7 @@ class ExportIntoExcel
         sheet[x + 1, y] = value
         sheet.row(x + 1).set_format y, Spreadsheet::Format.new(
           :align => :center,
-          :border => 1,
-          :pattern => 1,
-          :pattern_fg_color => 'gray')
+          :border => 1)
       end
     end
     book.write @destination
