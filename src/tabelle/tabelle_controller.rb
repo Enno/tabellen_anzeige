@@ -12,17 +12,18 @@ class TabelleController < ApplicationController
   set_close_action :exit
 
   def spaltenwahl_btn_action_performed
+    update_model view_model, :col_model #,  :aktive_spalten, :inaktive_spalten
     spaltenwahl_controller = SpaltenwahlController.instance
     spaltenwahl_controller.spalten_eintragen :alle => model.alle_spalten_namen,
       :aktive => model.alle_spalten_namen #bei init alle gesetzt
     spaltenwahl_controller.open
-    @aktive_spalten = spaltenwahl_controller.aktive_spalten
-    @inaktive_spalten = model.alle_spalten_namen - @aktive_spalten
-    aktive_spalten_auswahl
+    model.aktive_spalten = spaltenwahl_controller.aktive_spalten
+    model.inaktive_spalten = model.alle_spalten_namen - model.aktive_spalten
+    update_view
+#    aktive_spalten_auswahl
   end
 
-  def aktive_spalten_auswahl
-    update_model view_model, :col_model, :aktive_spalten, :inaktive_spalten
+  def aktive_spalten_auswahl_xxxxx
     model.aktive_spalten   = @aktive_spalten
     model.inaktive_spalten = @inaktive_spalten
     signal :aktive_spalten_signal

@@ -37,26 +37,15 @@ class TabelleView < ApplicationView
   end
 
   define_signal :name => :aktive_spalten_signal, :handler => :setze_aktive_verstecke_inaktive_spalten
-
   def setze_aktive_verstecke_inaktive_spalten(model, transfer)
-    model.inaktive_spalten.each do |name|
-      col_index = blatt.columnModel.getColumnIndex(name)
-      blatt.columnModel.getColumn(col_index).setMinWidth(0)
-      blatt.columnModel.getColumn(col_index).setMaxWidth(0)
-      blatt.columnModel.getColumn(col_index).setWidth(0)
-    end
-    model.aktive_spalten.each_with_index do |name, index|
-      col_index = blatt.columnModel.getColumnIndex(name)
-      blatt.columnModel.getColumn(col_index).setMinWidth(10)
-      blatt.columnModel.getColumn(col_index).setMaxWidth(10000)
-      blatt.columnModel.getColumn(col_index).setPreferredWidth(400)
-      blatt.moveColumn(col_index, index)
-    end
-    blatt.addColumnSelectionInterval(0, model.aktive_spalten.size - 1)
+    p :signal
   end
 
+
+
   map :model => :blatt, :view => "blatt", :using => [nil, :default]
-  map :model => :col_model, :view => "blatt.column_model", :using => [:default, :default]
+  map :model => :col_model, :view => "blatt.column_model"
+  
   map :model => :daten_modell, :view => "blatt.model"
 
 end
