@@ -34,11 +34,13 @@ class TabelleModel
     @col_pref_width_old  = []
   end
 
-  def daten_pfad=(daten_pfad)
-    p [:dpfad=, daten_pfad]
+  def daten_pfad=(d_pfad)
+    p [:dpfad=, d_pfad]
     begin
-      @daten_pfad = daten_pfad
-      tabellen_zeilen = TABELLEN_FUNDAMENT.tabelle_fuer_pfad(daten_pfad)
+      @daten_pfad = d_pfad
+      @daten_pfad = "/dat/GiS/gm/MStar/MsNeu/DATEN/<AT7V2>" if @daten_pfad.empty?
+      @daten_pfad += ":vk" unless @daten_pfad =~ /:\w+$/
+      tabellen_zeilen = TABELLEN_FUNDAMENT.tabelle_fuer_pfad(@daten_pfad)
       @daten_modell = DatenModell.new(tabellen_zeilen)
       #p @daten_modell
       p daten_modell.getColumnCount
