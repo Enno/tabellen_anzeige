@@ -2,8 +2,11 @@
 
 # encoding: utf-8
 
-require 'ffmath' rescue puts "### Bibliothek ffmath nicht gefunden ###"
-
+begin
+  require 'ffmath'
+  rescue LoadError
+  puts "### Bibliothek ffmath nicht gefunden ###"
+end
 
 class DatenModell <  javax.swing.table.AbstractTableModel
 
