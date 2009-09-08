@@ -102,7 +102,7 @@ class TabelleModel
       cm.getColumn(col_index).setMinWidth(min_spalten_breite[col_index])
       cm.getColumn(col_index).setMaxWidth(max_spalten_breite[col_index])
       cm.getColumn(col_index).setPreferredWidth(pref_spalten_breite[col_index])
-      jt.moveColumn(col_index, index)
+     # jt.moveColumn(col_index, index)
     end
     jt.addColumnSelectionInterval(0, aktive_spalten.size - 1)
   end

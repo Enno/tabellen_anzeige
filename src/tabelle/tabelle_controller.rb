@@ -70,8 +70,10 @@ class TabelleController < ApplicationController
         :button1_text => "Ok"
       )
     when false
+      col_indices = col_model_indices
+      p [:col_indices, col_indices]
       if model.aktive_spalten
-        eg.get_selected_data(daten_modell, model.aktive_spalten)
+        eg.get_selected_data(daten_modell, model.aktive_spalten, col_indices)
         open_info_dialog(
           :label        => "Exportieren erfolgreich (#{destination_path})",
           :button1_text => "Ok"
@@ -102,5 +104,13 @@ class TabelleController < ApplicationController
 
   def daten_modell
     model.daten_modell
+  end
+
+  def col_model_indices
+    col_index = []
+    model.aktive_spalten.each do |name|
+      col_index << model.col_model.getColumnIndex(name)
+    end
+    return col_index
   end
 end
