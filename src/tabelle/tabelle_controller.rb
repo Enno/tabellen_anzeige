@@ -1,5 +1,6 @@
 require 'spaltenwahl_controller'
-require "#{File.dirname(File.dirname(File.dirname(__FILE__)))}/lib/rcomp/excel_export/lib/export_into_excel"
+#require "#{File.dirname(File.dirname(File.dirname(__FILE__)))}/lib/rcomp/excel_export/lib/export_into_excel"
+require "export_into_excel"
 require 'dateiauswahl_controller'
 require 'info_controller'
 require 'bestaetigung_controller'
