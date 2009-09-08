@@ -26,7 +26,7 @@ class SpaltenwahlView < ApplicationView
   end
 
   map :view => "spaltenliste.selected_indices", :model => :aktive_spalten_indices, :using => [:setze_aktive, :hole_aktive]
-  #map :view => "spaltenliste.selected_values", :model => :aktive_spalten, :using => [:setze_aktive, :hole_aktive]
+  #map :view => "spaltenliste.selected_values", :model => :aktive_spalten_namen, :using => [:setze_aktive, :hole_aktive]
 
   def setze_aktive(array_of_indices)
     array_of_indices.to_java(Java::int)

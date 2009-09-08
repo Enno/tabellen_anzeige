@@ -13,14 +13,15 @@ class TabelleController < ApplicationController
   set_close_action :exit
 
   def spaltenwahl_btn_action_performed
-    model.aktive_spalten = model.aktive_spalten ? model.aktive_spalten : model.alle_spalten_namen
     update_model view_model, :blatt, :col_model
     spaltenwahl_controller = SpaltenwahlController.instance
-    spaltenwahl_controller.spalten_eintragen :alle => model.alle_spalten_namen,
-      :aktive => model.aktive_spalten #bei init alle gesetzt
+    spaltenwahl_controller.spalten_eintragen \
+      :alle  => model.alle_spalten_namen,
+      :aktive => model.aktive_spalten_namen || model.alle_spalten_namen # beim ersten Mal alle gesetzt
     spaltenwahl_controller.open
-    model.aktive_spalten = spaltenwahl_controller.aktive_spalten
-    model.inaktive_spalten = model.alle_spalten_namen - model.aktive_spalten
+    model.aktive_spalten_namen = spaltenwahl_controller.aktive_spalten_namen
+    
+    model.setze_aktive_verstecke_inaktive_spalten_fuer_view
     update_view
   end
 
@@ -57,26 +58,27 @@ class TabelleController < ApplicationController
   def exportieren_nach_menuitem_action_performed
     dateiauswahl_controller = DateiauswahlController.instance
     dateiauswahl_controller.open
+    #return if dateiauswahl_controller.user_aborted
     destination_path = dateiauswahl_controller.get_destination_path
-    eg = ExportIntoExcel.new(destination_path)
+    eg = ExportIntoExcel.new(destination_path, daten_modell)
     case open_bestaetigung_dialog(
         :label        => "Welche Spalten sollen exportiert werden?",
         :button1_text => "Alle",
         :button2_text => "Ausgewählte"
       )
     when true
-      eg.get_all_data(daten_modell)
+      eg.get_all_data()
       open_info_dialog(
         :label        => "Exportieren erfolgreich (#{destination_path})",
         :button1_text => "Ok"
       )
     when false
-      col_indices = col_model_indices
-      p [:col_indices, col_indices]
-      if model.aktive_spalten
-        eg.get_selected_data(daten_modell, model.aktive_spalten, col_indices)
+      if model.aktive_spalten_namen
+        active_col_indices = col_model_indices
+        p [:col_indices, active_col_indices]
+        eg.get_selected_data(active_col_indices)
         open_info_dialog(
-          :label        => "Exportieren erfolgreich (#{destination_path})",
+          :label      => "Exportieren erfolgreich (#{destination_path})",
           :button1_text => "Ok"
         )
       else
@@ -109,9 +111,10 @@ class TabelleController < ApplicationController
 
   def col_model_indices
     col_index = []
-    model.aktive_spalten.each do |name|
+    model.aktive_spalten_namen.each do |name|
       col_index << model.col_model.getColumnIndex(name)
     end
     return col_index
   end
+
 end

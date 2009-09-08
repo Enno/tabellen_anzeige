@@ -17,11 +17,11 @@ class TabelleView < ApplicationView
   def load
     p :load
 
-    cmodel = blatt.getColumnModel
+    #cmodel = blatt.getColumnModel
     #tbelle.setColumnSelectionAllowed true
-    cmodel.setColumnSelectionAllowed true
-    blatt.setAutoCreateRowSorter(true)
-    cmodel.addColumn javax.swing.table.TableColumn.new
+    #cmodel.setColumnSelectionAllowed true
+    #blatt.setAutoCreateRowSorter(true)
+    #cmodel.addColumn javax.swing.table.TableColumn.new
 
     #blatt.setColumnModel cmodel
 

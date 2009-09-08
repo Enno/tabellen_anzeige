@@ -62,11 +62,16 @@ class DatenModellDummy <  javax.swing.table.AbstractTableModel
   end
 
   def getColumnName(j)
-    j*j
+    "head#{j}"
   end
 
   def getValueAt(i, j)
-    @daten[i][j]
+    #@daten[i][j]
+    case j
+    when 0 then "zeile-#{j}"
+    when 2 then 2.11 * j
+    else       i*j
+    end
   end
 
   def setValueAt(obj, i, j)
