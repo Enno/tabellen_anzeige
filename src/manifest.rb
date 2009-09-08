@@ -97,7 +97,7 @@ gem_names.each do |gem_name|
   end
 end
 
-rcomp_dirs = %w[ffmath]
+rcomp_dirs = %w[ffmath excel_export]
 rcomp_dirs.each do |name|
   add_to_load_path case Monkeybars::Resolver.run_location
   when Monkeybars::Resolver::IN_FILE_SYSTEM
