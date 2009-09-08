@@ -3,7 +3,7 @@
 # encoding: utf-8
 
 class DatenModellDummy <  javax.swing.table.AbstractTableModel
-
+  attr_reader :daten
   def initialize()
     super()
     #@daten = Array.new(7) {|i| Array.new(4, nil)}
