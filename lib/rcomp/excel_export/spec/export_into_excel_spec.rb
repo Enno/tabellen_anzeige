@@ -1,5 +1,3 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
 require 'spreadsheet'
 require 'export_into_excel'
 require File.dirname(__FILE__) + '/fixtures/daten_modell_1'
@@ -67,7 +65,6 @@ describe ExportIntoExcel, "with selected Columns" do
   before(:all) do
     File.delete(filepath) rescue nil
     @export_into_excel = ExportIntoExcel.new(filepath, data_model_dummy)
-#    @export_into_excel.get_all_data()
   end
 
   it "row 0 of all columns" do
@@ -85,8 +82,8 @@ describe ExportIntoExcel, "with selected Columns" do
     @export_into_excel.get_selected_data(active_col_indices)
     z = 0
     book = Spreadsheet.open filepath
-    active_col_indices.each do |s|
-      book.worksheet(0).row(z+1)[s].should == data_model_dummy.daten[z][s]
+    active_col_indices.each_with_index do |s, active_col_indices_index|
+      book.worksheet(0).row(z+1)[active_col_indices_index].should == data_model_dummy.daten[z][s]
     end
   end
 

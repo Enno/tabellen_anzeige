@@ -38,6 +38,7 @@ public class TabelleFrame extends javax.swing.JFrame {
         daten_pfad = new javax.swing.JTextField();
         anzeigen_btn = new javax.swing.JButton();
         exportieren_button = new javax.swing.JButton();
+        fuer_tests_exportieren_nach_button = new javax.swing.JButton();
         menuleiste = new javax.swing.JMenuBar();
         datei_menu = new javax.swing.JMenu();
         exportieren_menuitem = new javax.swing.JMenuItem();
@@ -73,6 +74,8 @@ public class TabelleFrame extends javax.swing.JFrame {
 
         exportieren_button.setLabel("Exportieren");
 
+        fuer_tests_exportieren_nach_button.setText("fuer tests: ausgewaehlte spalten exportieren nach...");
+
         datei_menu.setText("Datei");
 
         exportieren_menuitem.setText("Exportieren");
@@ -102,10 +105,13 @@ public class TabelleFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(daten_pfad, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spaltenwahl_btn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(spaltenwahl_btn)
+                                .addGap(99, 99, 99)
+                                .addComponent(fuer_tests_exportieren_nach_button)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(anzeigen_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                            .addComponent(anzeigen_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(exportieren_button)
                                 .addGap(30, 30, 30)))))
@@ -121,7 +127,8 @@ public class TabelleFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spaltenwahl_btn)
-                    .addComponent(exportieren_button))
+                    .addComponent(exportieren_button)
+                    .addComponent(fuer_tests_exportieren_nach_button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                 .addContainerGap())
@@ -150,6 +157,7 @@ public class TabelleFrame extends javax.swing.JFrame {
     private javax.swing.JButton exportieren_button;
     private javax.swing.JMenuItem exportieren_menuitem;
     private javax.swing.JMenuItem exportieren_nach_menuitem;
+    private javax.swing.JButton fuer_tests_exportieren_nach_button;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;

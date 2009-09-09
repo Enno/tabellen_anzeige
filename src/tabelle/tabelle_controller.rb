@@ -5,7 +5,7 @@ require 'dateiauswahl_controller'
 require 'info_controller'
 require 'bestaetigung_controller'
 
-FILE_PATH = Dir.getwd + '/data.xls'
+FILE_PATH = Dir.getwd + '/daten/all_exported_data.xls'
 
 class TabelleController < ApplicationController
   set_model 'TabelleModel'
@@ -20,15 +20,14 @@ class TabelleController < ApplicationController
       :aktive => model.aktive_spalten_namen || model.alle_spalten_namen # beim ersten Mal alle gesetzt
     spaltenwahl_controller.open
     model.aktive_spalten_namen = spaltenwahl_controller.aktive_spalten_namen
-    
     model.setze_aktive_verstecke_inaktive_spalten_fuer_view
     update_view
   end
 
   def exportieren_button_action_performed
-    eg = ExportIntoExcel.new(FILE_PATH)
+    eg = ExportIntoExcel.new(FILE_PATH, daten_modell)
     update_model view_model, :daten_modell
-    eg.get_all_data(daten_modell)
+    eg.get_all_data
     open_info_dialog(
       :label        => "Exportieren erfolgreich (#{FILE_PATH})",
       :button1_text => "Ok"
@@ -75,7 +74,6 @@ class TabelleController < ApplicationController
     when false
       if model.aktive_spalten_namen
         active_col_indices = col_model_indices
-        p [:col_indices, active_col_indices]
         eg.get_selected_data(active_col_indices)
         open_info_dialog(
           :label      => "Exportieren erfolgreich (#{destination_path})",
@@ -88,6 +86,25 @@ class TabelleController < ApplicationController
         )
       end
     end
+    update_view
+  end
+
+    def fuer_tests_exportieren_nach_button_action_performed
+    destination_path = File.dirname(File.dirname(File.dirname(__FILE__))) + "/daten/selected_exported_data.xls"
+    eg = ExportIntoExcel.new(destination_path, daten_modell)
+      if model.aktive_spalten_namen
+        active_col_indices = col_model_indices
+        eg.get_selected_data(active_col_indices)
+        open_info_dialog(
+          :label      => "Exportieren erfolgreich (#{destination_path})",
+          :button1_text => "Ok"
+        )
+      else
+        open_info_dialog(
+          :label        => "Sie haben keine Spalte(n) ausgewählt",
+          :button1_text => "Ok"
+        )
+      end
     update_view
   end
 

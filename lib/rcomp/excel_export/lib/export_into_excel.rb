@@ -23,37 +23,12 @@ class ExportIntoExcel
     write_into_excel_file(column_indices, values)
   end
 
-  def write_into_excel_file(column_indices, values)
-    book = Spreadsheet::Workbook.new
-    sheet = book.create_worksheet :name => @worksheet_name
-    column_indices.each do |y|
-      name = data_model.getColumnName(y)
-      sheet[0, y] = name
-      sheet.row(0).set_format y, Spreadsheet::Format.new(
-        :weight => :bold,
-        :align  => :center,
-        :border => 1,
-        :pattern => 1,
-        :pattern_fg_color => 'gray')
-    end
-    values.each_with_index do |row, x|
-      row.each_with_index do |value, y|
-        sheet[x + 1, y] = value
-        sheet.row(x + 1).set_format y, Spreadsheet::Format.new(
-          :align => :center,
-          :border => 1)
-      end
-    end
-    book.write @destination
-  end
-
   def get_selected_data(active_col_indices)
     rowcount_value = data_model.getRowCount
     values = Array.new(rowcount_value) {|i| Array.new(active_col_indices.size-1, nil)}
-    active_col_indices.each do |col_index|
-#      p [:col_index, col_index]
+    active_col_indices.each_with_index do |col_index, active_col_index|
       rowcount_value.times do |row|
-        values[row][col_index] = data_model.getValueAt(row, col_index) ? check_value_format(data_model, row, col_index) : nil
+        values[row][active_col_index] = data_model.getValueAt(row, col_index) ? check_value_format(data_model, row, col_index) : nil
       end
     end
     write_into_excel_file(active_col_indices, values)
@@ -70,8 +45,32 @@ class ExportIntoExcel
     when /^[=A-Z($0-9,)\S]*$/ #formel
       data_model.getValueAt(row, col).to_s
     else
-      nil
+      data_model.getValueAt(row, col)
     end
+  end
+
+  def write_into_excel_file(column_indices, values)
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet :name => @worksheet_name
+    column_indices.each_with_index do |column, column_index|
+      name = data_model.getColumnName(column)
+      sheet[0, column_index] = name
+      sheet.row(0).set_format column_index, Spreadsheet::Format.new(
+        :weight => :bold,
+        :align  => :center,
+        :border => 1,
+        :pattern => 1,
+        :pattern_fg_color => 'gray')
+    end
+    values.each_with_index do |row, value_index|
+      row.each_with_index do |value, row_index|
+        sheet[value_index + 1, row_index] = value
+        sheet.row(value_index + 1).set_format row_index, Spreadsheet::Format.new(
+          :align => :center,
+          :border => 1)
+      end
+    end
+    book.write @destination
   end
 
 end

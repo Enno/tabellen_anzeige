@@ -14,7 +14,7 @@ class TabelleModel
     p :init
     @col_model           = DefaultTableColumnModel.new
     @daten_modell_dummy  = @daten_modell = DatenModellDummy.new
-    @col_width       = Array.new(@col_model.column_count)
+    @col_width           = Array.new(@col_model.column_count)
   end
 
 
@@ -33,7 +33,6 @@ class TabelleModel
   end
 
   def col_model= cm
-    p [:cm, @col_width]
     @col_model = cm
   end
 
@@ -46,8 +45,8 @@ class TabelleModel
       tabellen_zeilen = TABELLEN_FUNDAMENT.tabelle_fuer_pfad(@daten_pfad)
       @daten_modell = DatenModell.new(tabellen_zeilen)
       #p @daten_modell
-      p daten_modell.getColumnCount
-      p daten_modell.getRowCount
+#      p daten_modell.getColumnCount
+#      p daten_modell.getRowCount
     rescue
       p $!
       puts $!.backtrace
@@ -94,10 +93,8 @@ class TabelleModel
   
   def setze_aktive_verstecke_inaktive_spalten_fuer_view
     p ["akt/inakt", aktive_spalten_namen, alle_spalten_namen - aktive_spalten_namen ]
-    return unless aktive_spalten_namen
-    
+    return unless aktive_spalten_namen    
     speichere_spalten_breiten
-
     alle_spalten_indices.each  do |col_index|
       setze_spalten_breite(col_index)
     end

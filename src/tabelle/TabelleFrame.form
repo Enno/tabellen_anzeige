@@ -68,11 +68,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="daten_pfad" alignment="0" min="-2" pref="472" max="-2" attributes="0"/>
-                          <Component id="spaltenwahl_btn" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="spaltenwahl_btn" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
+                              <Component id="fuer_tests_exportieren_nach_button" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="60" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="anzeigen_btn" pref="186" max="32767" attributes="0"/>
+                          <Component id="anzeigen_btn" pref="121" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="exportieren_button" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -96,6 +100,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="spaltenwahl_btn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="exportieren_button" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fuer_tests_exportieren_nach_button" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="343" max="32767" attributes="0"/>
@@ -175,6 +180,11 @@
     <Component class="javax.swing.JButton" name="exportieren_button">
       <Properties>
         <Property name="label" type="java.lang.String" value="Exportieren"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="fuer_tests_exportieren_nach_button">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="fuer tests: ausgewaehlte spalten exportieren nach..."/>
       </Properties>
     </Component>
   </SubComponents>
