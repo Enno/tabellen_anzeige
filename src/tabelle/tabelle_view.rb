@@ -16,16 +16,12 @@ class TabelleView < ApplicationView
 
   def load
     p :load
-
-    #cmodel = blatt.getColumnModel
-    #tbelle.setColumnSelectionAllowed true
-    #cmodel.setColumnSelectionAllowed true
-    #blatt.setAutoCreateRowSorter(true)
-    #cmodel.addColumn javax.swing.table.TableColumn.new
-
-    #blatt.setColumnModel cmodel
-
-    #self.blatt.setModel DatenModellDummy.new
+    blatt.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_OFF)
+    blatt.setAutoCreateRowSorter(true)
+    blatt.setColumnSelectionAllowed(true)
+    blatt.setRowSelectionAllowed(false)
+    blatt.clearSelection()
+    blatt.doLayout()
   end
 
   map :model => :daten_pfad, :view => "daten_pfad.text"

@@ -12,23 +12,21 @@ class TabelleModel
   def initialize
     super
     p :init
-    @col_model           = DefaultTableColumnModel.new
     @daten_modell_dummy  = @daten_modell = DatenModellDummy.new
+    @col_model           = DefaultTableColumnModel.new
     @col_width           = Array.new(@col_model.column_count)
   end
 
 
   def blatt= jtable
-    #p [:blatt, jtable]
     @col_model = jtable.getColumnModel
-    p [:blatt_aktive=, aktive_spalten_namen]
     @blatt = jtable
     @blatt.doLayout()
     @blatt.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_OFF)
     @blatt.setColumnSelectionAllowed(true)
     @blatt.setRowSelectionAllowed(false)
+    @blatt.setAutoCreateRowSorter(true)
     @blatt.clearSelection()
-    #@blatt.setAutoResizeMode(javax.swing.JTable::AUTO_RESIZE_ALL_COLUMNS)
     @blatt
   end
 
@@ -45,8 +43,8 @@ class TabelleModel
       tabellen_zeilen = TABELLEN_FUNDAMENT.tabelle_fuer_pfad(@daten_pfad)
       @daten_modell = DatenModell.new(tabellen_zeilen)
       #p @daten_modell
-#      p daten_modell.getColumnCount
-#      p daten_modell.getRowCount
+      #      p daten_modell.getColumnCount
+      #      p daten_modell.getRowCount
     rescue
       p $!
       puts $!.backtrace

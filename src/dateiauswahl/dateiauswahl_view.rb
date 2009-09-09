@@ -8,8 +8,8 @@ class DateiauswahlView < ApplicationView
   end
 
   def load
-    default_directory = File.dirname(File.dirname(__FILE__))
-   dateiauswahl_filechooser.currentDirectory = java.io.File.new(default_directory)
+    default_directory = File.dirname(File.dirname(File.dirname(__FILE__))) + "/daten/"
+    dateiauswahl_filechooser.currentDirectory = java.io.File.new(default_directory)
   end
 
   map :view => "dateiauswahl_filechooser.selectedFile", :model => :destination_path, :using => [nil, :string_zu_ruby]

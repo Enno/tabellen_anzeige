@@ -58,7 +58,7 @@ class TabelleController < ApplicationController
     dateiauswahl_controller = DateiauswahlController.instance
     dateiauswahl_controller.open
     #return if dateiauswahl_controller.user_aborted
-    destination_path = dateiauswahl_controller.get_destination_path
+    destination_path = dateiauswahl_controller.get_destination_path ? dateiauswahl_controller.get_destination_path : return
     eg = ExportIntoExcel.new(destination_path, daten_modell)
     case open_bestaetigung_dialog(
         :label        => "Welche Spalten sollen exportiert werden?",
